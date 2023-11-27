@@ -241,14 +241,14 @@ namespace GUI
 
             string trangThai = CheckAndSetColor(cbxTrangThai, label6);
             int trangThaiValue = (trangThai == "Hoạt động" ? 1 : 0);
-            //if (ContainsNumber(TenNSX))
-            //{
-            //    MessageBox.Show("Tên NSX không được chứa số!",
-            //                    "Lỗi",
-            //                    MessageBoxButtons.OK,
-            //                    MessageBoxIcon.Error);
-            //    return;
-            //}
+            if (ContainsNumber(TenNSX))
+            {
+                MessageBox.Show("Tên NSX không được chứa số!",
+                                "Lỗi",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                return;
+            }
             if ((string.IsNullOrWhiteSpace(MaNSX) || string.IsNullOrWhiteSpace(TenNSX) || string.IsNullOrWhiteSpace(SoDT) || string.IsNullOrWhiteSpace(DiaChi) || string.IsNullOrWhiteSpace(trangThai)))
             {
                 return;
@@ -513,7 +513,7 @@ namespace GUI
 
         private void applySearchs(string text)
         {
-            // dtSanPham = loaibill.getListLoai();
+            // dtSanPham = loaiBLL.getListLoai();
             currentSearch = text;
             Console.WriteLine(currentSearch);
             DataView dvNSX = nsxBLL.getListNSX().DefaultView;

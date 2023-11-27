@@ -626,7 +626,7 @@ namespace GUI
 
         private void applySearchs(string text)
         {
-            // dtSanPham = loaibill.getListLoai();
+            // dtSanPham = loaiBLL.getListLoai();
             currentSearch = text;
             Console.WriteLine(currentSearch);
             DataView dvSP = dtSanPham.DefaultView; ;

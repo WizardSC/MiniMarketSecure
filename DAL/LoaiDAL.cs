@@ -60,7 +60,7 @@ namespace DAO
             }
             return result;
         }
-        public DataTable getListLoaiMini()
+        public DataTable getListLoaiMini(int trangThai)
         {
             DataTable dt = new DataTable();
             try
@@ -68,8 +68,10 @@ namespace DAO
                 Connect();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "select MaLoai, TenLoai from LoaiSP where TrangThai = 1";
+                cmd.CommandText = "select MaLoai, TenLoai from LoaiSP where TrangThai = @TrangThai";
                 cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@TrangThai", trangThai);
+
                 SqlDataAdapter adt = new SqlDataAdapter(cmd);
                 adt.Fill(dt);
             }

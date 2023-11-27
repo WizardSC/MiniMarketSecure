@@ -38,15 +38,15 @@ namespace GUI
 
         private bool isFormFilter = false;
 
-        private LoaiBLL loaibill;
+        private LoaiBLL loaiBLL;
         private DataTable dt;
         private List<LoaiDTO> listLoai;
         //private LoaiDTO loaidto;
         public LoaiGUI()
         {
             InitializeComponent();
-            loaibill = new LoaiBLL();
-            dt = loaibill.getListLoai();
+            loaiBLL = new LoaiBLL();
+            dt = loaiBLL.getListLoai();
             loadMaLoai();
             clearForm();
             unhideError();
@@ -84,22 +84,24 @@ namespace GUI
      
         private void loadMaLoai()
         {
-            string maLoai;
+            var sortedLoai = loaiBLL.getListLoai().AsEnumerable()
+                 .OrderBy(row => row.Field<string>("MaLoai"))
+                 .CopyToDataTable();
 
-            loaibill = new LoaiBLL();
-            maLoai = loaibill.getMaxMaLoai();
-            if (maLoai == "")
+            if (sortedLoai.Rows.Count > 0)
+            {
+                // Lấy dòng cuối cùng (đã được sắp xếp)
+                var lastMaLoai = sortedLoai.AsEnumerable().Last()["MaLoai"].ToString();
+
+                // Tiếp tục xử lý như bình thường
+                int lastNumber = int.Parse(lastMaLoai.Substring(1));
+                int newNumber = lastNumber + 1;
+                string newMaLoai = "L" + newNumber.ToString("D3");
+                txtMaLoai.Texts = newMaLoai;
+            }
+            else
             {
                 txtMaLoai.Texts = "L001";
-            }
-            int tempNum = int.Parse(maLoai.Substring(2));
-            if ((tempNum + 1) >= 10)
-            {
-                txtMaLoai.Texts = "L0" + (tempNum + 1).ToString();
-            }
-            else if (tempNum >= 1 && tempNum < 9)
-            {
-                txtMaLoai.Texts = "L00" + (tempNum + 1).ToString();
             }
         }
 
@@ -126,7 +128,7 @@ namespace GUI
         public void init()
         {
             
-            dgvLoai.DataSource = loaibill.getListLoai();
+            dgvLoai.DataSource = loaiBLL.getListLoai();
         }
 
         private void btnThem_Click(object sender, EventArgs e)
@@ -151,7 +153,7 @@ namespace GUI
             }
 
             LoaiDTO LSP = new LoaiDTO(MaLoai, TenLoai, trangThaiValue);
-            int flag = loaibill.insert_LoaiSP(LSP) ? 1 : 0;
+            int flag = loaiBLL.insert_LoaiSP(LSP) ? 1 : 0;
 
             if (flag == 1)
             {
@@ -178,7 +180,7 @@ namespace GUI
         {
             foreach (char c in input)
             {
-                if (!char.IsLetter(c))
+                if (!char.IsLetter(c) && !char.IsWhiteSpace(c))
                 {
                     return false;
                 }
@@ -250,7 +252,7 @@ namespace GUI
             }
 
             LoaiDTO loai = new LoaiDTO(MaLoai, TenLoai, trangThaiValue);
-            if (loaibill.update_LoaiSP(loai))
+            if (loaiBLL.update_LoaiSP(loai))
             {
                 MessageBox.Show("Sửa thành công",
                     "Thông báo",
@@ -284,7 +286,7 @@ namespace GUI
                 if (choice2 == DialogResult.Yes)
                 {
                     bool isLoiKhoaNgoai;
-                    if (loaibill.delete_LoaiSP(MaLoai, out isLoiKhoaNgoai))
+                    if (loaiBLL.delete_LoaiSP(MaLoai, out isLoiKhoaNgoai))
                     {
 
                         MessageBox.Show("Xóa thành công",
@@ -328,7 +330,7 @@ namespace GUI
                 if (choice == DialogResult.Yes)
                 {
                     bool isLoiKhoaNgoai;
-                    bool kq = loaibill.delete_LoaiSP(MaLoai, out isLoiKhoaNgoai);
+                    bool kq = loaiBLL.delete_LoaiSP(MaLoai, out isLoiKhoaNgoai);
                     if (kq)
                     {
                         MessageBox.Show("Xóa thành công",
@@ -361,7 +363,7 @@ namespace GUI
                                     var result1 = MessageBox.Show("Bạn có muốn thay đổi trạng thái của loại sản phẩm này?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                                     if (result1 == DialogResult.OK)
                                     {
-                                        int flag = loaibill.update_LoaiSP(trangThai, MaLoai) ? 1 : 0;
+                                        int flag = loaiBLL.update_LoaiSP(trangThai, MaLoai) ? 1 : 0;
                                         if (flag == 1)
                                         {
                                             MessageBox.Show("Thay đổi trạng thái thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -457,10 +459,10 @@ namespace GUI
 
         private void applySearchs(string text)
         {
-            // dtSanPham = loaibill.getListLoai();
+            // dtSanPham = loaiBLL.getListLoai();
             currentSearch = text;
             Console.WriteLine(currentSearch);
-            DataView dvLoai = loaibill.getListLoai().DefaultView;
+            DataView dvLoai = loaiBLL.getListLoai().DefaultView;
             dvLoai.RowFilter = currentSearch;
             dgvLoai.DataSource = dvLoai.ToTable();
         }
@@ -676,7 +678,7 @@ namespace GUI
         {
             // Code để lấy dữ liệu từ nguồn nào đó và trả về DataTable
             // Ví dụ: 
-            dt = loaibill.getListLoai();
+            dt = loaiBLL.getListLoai();
             // ... (code để điền dữ liệu vào DataTable)
             return dt;
         }
