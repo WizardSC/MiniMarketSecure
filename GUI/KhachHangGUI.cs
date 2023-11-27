@@ -138,22 +138,26 @@ namespace GUI
         //Load mã khách hàng cuối cùng lên form
         private void loadMaKH()
         {
-            khBLL = new KhachHangBLL();
-            maKH = khBLL.getMaxMaKhachHang();
-            string lastMaNV = maKH;
-            if (lastMaNV == "")
+            var sortedKH = khBLL.getListKhachHang().AsEnumerable()
+                .OrderBy(row => row.Field<string>("MaKH"))
+                .CopyToDataTable();
+
+            if (sortedKH.Rows.Count > 0)
+            {
+                // Lấy dòng cuối cùng (đã được sắp xếp)
+                var lastMaKH = sortedKH.AsEnumerable().Last()["MaKH"].ToString();
+
+                // Tiếp tục xử lý như bình thường
+                int lastNumber = int.Parse(lastMaKH.Substring(2));
+                int newNumber = lastNumber + 1;
+                string newMaKH = "KH" + newNumber.ToString("D3");
+                txtMaKH.Texts = newMaKH;
+            }
+            else
             {
                 txtMaKH.Texts = "KH001";
             }
-            int tempNum = int.Parse(lastMaNV.Substring(2));
-            if ((tempNum + 1) >= 10)
-            {
-                txtMaKH.Texts = "KH0" + (tempNum + 1).ToString();
-            }
-            else if (tempNum >= 1 && tempNum < 9)
-            {
-                txtMaKH.Texts = "KH00" + (tempNum + 1).ToString();
-            }
+
         }
         private void unhideError()
         {

@@ -71,7 +71,8 @@ namespace DAL
 
             return dt;
         }
-        public DataTable getListNhaCCMini()
+
+        public DataTable getListNhaCCMini(int trangThai)
         {
             DataTable dt = new DataTable();
             try
@@ -79,8 +80,10 @@ namespace DAL
                 Connect();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "select MaNCC, TenNCC from nhacungcap where TrangThai = 1";
+                cmd.CommandText = "select MaNCC, TenNCC from nhacungcap where TrangThai = @TrangThai";
                 cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("TrangThai", trangThai).SqlDbType = SqlDbType.Int;
+
                 SqlDataAdapter adt = new SqlDataAdapter(cmd);
                 adt.Fill(dt);
             }

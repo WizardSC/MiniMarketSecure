@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -56,6 +57,27 @@ namespace BLL.Crypto
 
                 // Chuyển mảng byte giải mã thành chuỗi UTF-8
                 return Encoding.UTF8.GetString(decryptedBytes);
+            }
+        }
+        public static string EncryptDateTime(DateTime dateTime, string secretKey)
+        {
+            string dateTimeString = dateTime.ToString("yyyy-MM-dd HH:mm:ss.fff"); // Định dạng ngày giờ thành chuỗi
+            return AES.EncryptAES(dateTimeString, secretKey);
+        }
+
+        public static DateTime DecryptDateTime(string encryptedDateTime, string secretKey)
+        {
+            string decryptedString = AES.DecryptAES(encryptedDateTime, secretKey);
+            DateTime dateTime;
+
+            if (DateTime.TryParseExact(decryptedString, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+            {
+                return dateTime;
+            }
+            else
+            {
+                // Xử lý khi không thể giải mã thành công thành DateTime
+                throw new InvalidOperationException("Không thể giải mã thành công giá trị DateTime.");
             }
         }
     }

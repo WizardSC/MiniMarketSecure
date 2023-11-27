@@ -45,6 +45,7 @@ namespace GUI
 
         private string maNV;
         private string fileName;
+        private string maTK;
 
         private ChucVuBLL cvBLL;
         private DataTable dtChucVu;
@@ -102,23 +103,26 @@ namespace GUI
         }
         private void loadMaNV()
         {
-            nvBLL = new NhanVienBLL();
-            maNV = nvBLL.getMaxMaNhanVien();
-            string lastMaNV = maNV;
-            if (lastMaNV == "")
+            var sortedNV = nvBLL.getListNhanVien().AsEnumerable()
+                .OrderBy(row => row.Field<string>("MaNV"))
+                .CopyToDataTable();
+
+            if (sortedNV.Rows.Count > 0)
+            {
+                // Lấy dòng cuối cùng (đã được sắp xếp)
+                var lastMaNV = sortedNV.AsEnumerable().Last()["MaNV"].ToString();
+
+                // Tiếp tục xử lý như bình thường
+                int lastNumber = int.Parse(lastMaNV.Substring(2));
+                int newNumber = lastNumber + 1;
+                string newMaNV = "NV" + newNumber.ToString("D3");
+                txtMaNV.Texts = newMaNV;
+            }
+            else
             {
                 txtMaNV.Texts = "NV001";
             }
-            int tempNum = int.Parse(lastMaNV.Substring(2));
-            if ((tempNum + 1) >= 10)
-            {
-                txtMaNV.Texts = "NV0" + (tempNum + 1).ToString();
-            }
-            else if (tempNum >= 1 && tempNum < 9)
-            {
-                txtMaNV.Texts = "NV00" + (tempNum + 1).ToString();
-            }
-          
+
         }
         private void loadBtn()
         {
@@ -509,7 +513,7 @@ namespace GUI
             {
                 return;
             }
-            NhanVienDTO nv = new NhanVienDTO(maNV, ho, ten, ngaySinh, gioiTinh, soDT, diaChi, trangThaiValue, maCV,img);
+            NhanVienDTO nv = new NhanVienDTO(maNV, ho, ten, ngaySinh, gioiTinh, soDT, diaChi, trangThaiValue, null, maCV,img);
             if (nvBLL.insertNhanVien(nv))
             {
                 MessageBox.Show("Thêm thành công",
@@ -553,6 +557,7 @@ namespace GUI
             string chucVu = CheckAndSetColor(cbxChucVu, lblErrChucVu);
 
             string maCV = searchMaCVbyTenCV(chucVu);
+
             string img = fileName;
             if (img == null)
             {
@@ -585,7 +590,7 @@ namespace GUI
                 return;
             }
 
-            NhanVienDTO nv = new NhanVienDTO(maNV, ho, ten, ngaySinh, gioiTinh, soDT, diaChi, trangThaiValue, maCV,img);
+            NhanVienDTO nv = new NhanVienDTO(maNV, ho, ten, ngaySinh, gioiTinh, soDT, diaChi, trangThaiValue, maTK, maCV,img);
             if (nvBLL.updateNhanVien(nv))
             {
                 MessageBox.Show("Sửa thành công",
@@ -706,6 +711,8 @@ namespace GUI
             txtSoDT.Texts = dgvNhanVien.Rows[i].Cells[5].Value.ToString();
             txtDiaChi.Texts = dgvNhanVien.Rows[i].Cells[6].Value.ToString();
             int trangThai = int.Parse(dgvNhanVien.Rows[i].Cells[7].Value.ToString());
+            maTK = dgvNhanVien.Rows[i].Cells["MaTK1"].Value.ToString();
+           
             string chucVu = dgvNhanVien.Rows[i].Cells[9].Value.ToString();
             string img = dgvNhanVien.Rows[i].Cells[10].Value.ToString();
             string appDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
@@ -787,10 +794,7 @@ namespace GUI
             unhideError();
 
         }
-        private void dgvNhanVien_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
+       
         private void btnXoa_Click(object sender, EventArgs e)
         {
             string maNV = txtMaNV.Texts;

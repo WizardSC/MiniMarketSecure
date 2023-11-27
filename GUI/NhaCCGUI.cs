@@ -23,6 +23,7 @@ using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using System.Drawing.Imaging;
 using DevExpress.XtraReports.UI;
+using DAO;
 
 namespace GUI
 {
@@ -98,21 +99,24 @@ namespace GUI
 
         private void loadMaNCC()
         {
-            nccBLL = new NhaCungCapBLL();
-            ma = nccBLL.getMaxMaNhaCC();
+            var sortedNCC = nccBLL.getListNCC().AsEnumerable()
+                             .OrderBy(row => row.Field<string>("MaNCC"))
+                             .CopyToDataTable();
 
-            if (ma == "")
+            if (sortedNCC.Rows.Count > 0)
+            {
+                // Lấy dòng cuối cùng (đã được sắp xếp)
+                var lastMaNCC = sortedNCC.AsEnumerable().Last()["MaNCC"].ToString();
+
+                // Tiếp tục xử lý như bình thường
+                int lastNumber = int.Parse(lastMaNCC.Substring(3));
+                int newNumber = lastNumber + 1;
+                string newMaNCC = "NCC" + newNumber.ToString("D3");
+                txtMaNCC.Texts = newMaNCC;
+            }
+            else
             {
                 txtMaNCC.Texts = "NCC001";
-            }
-            int tempNum = int.Parse(ma.Substring(3));
-            if ((tempNum + 1) >= 10)
-            {
-                txtMaNCC.Texts = "NCC0" + (tempNum + 1).ToString();
-            }
-            else if (tempNum >= 1 && tempNum < 9)
-            {
-                txtMaNCC.Texts = "NCC00" + (tempNum + 1).ToString();
             }
 
         }

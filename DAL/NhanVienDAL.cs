@@ -65,7 +65,7 @@ namespace DAL
             return dt;
         }
 
-        public DataTable getListNhanVienNoHasTK()
+        public DataTable getListNhanVienNoHasTK(int trangThai)
         {
             DataTable dt = new DataTable();
             try
@@ -73,7 +73,8 @@ namespace DAL
                 Connect();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "sp_getNVKhongCoTaiKhoan"; 
+                cmd.CommandText = "sp_getNVKhongCoTaiKhoan";
+                cmd.Parameters.Add("@TrangThai", SqlDbType.Int).Value = trangThai;
                 cmd.Connection = conn;
                 SqlDataAdapter adt = new SqlDataAdapter(cmd);
                 adt.Fill(dt);
@@ -117,7 +118,7 @@ namespace DAL
             return dt;
         }
 
-        public DataTable getListNhanVienHasTK()
+        public DataTable getListNhanVienHasTK(int trangThai, string maTaiKhoan)
         {
             DataTable dt = new DataTable();
             try
@@ -127,12 +128,15 @@ namespace DAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "sp_getNVCoTaiKhoan";
                 cmd.Connection = conn;
+                cmd.Parameters.Add("@TrangThai", SqlDbType.Int).Value = trangThai;
+                cmd.Parameters.Add("@MaTaiKhoan", SqlDbType.VarChar, 100).Value = maTaiKhoan;
+
                 SqlDataAdapter adt = new SqlDataAdapter(cmd);
                 adt.Fill(dt);
             }
-
             catch (Exception ex)
             {
+                // Xử lý ngoại lệ
                 return null;
             }
             finally
@@ -162,7 +166,7 @@ namespace DAL
                 //cmd.Parameters.Add(new SqlParameter("@IMG", SqlDbType.Image) { Value = DBNull.Value });
                 cmd.Parameters.Add(new SqlParameter("@MaTK", SqlDbType.NVarChar) { Value = DBNull.Value });
                 cmd.Parameters.AddWithValue("@IMG", nv.Img).SqlDbType = SqlDbType.NVarChar;
-                //cmd.Parameters.AddWithValue("@MaTK", nv.MaTK).SqlDbType = SqlDbType.NVarChar;
+                cmd.Parameters.AddWithValue("@MaTK", nv.MaTK).SqlDbType = SqlDbType.NVarChar;
                 cmd.Parameters.AddWithValue("@MaCV", nv.MaCV).SqlDbType = SqlDbType.Char;
 
                 cmd.ExecuteNonQuery();
@@ -187,7 +191,7 @@ namespace DAL
                 Connect();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "update nhanvien set Ho = @Ho, Ten = @Ten, NgaySinh = @NgaySinh, GioiTinh = @GioiTinh, SoDT = @SoDT, DiaChi = @DiaChi, TrangThai = @TrangThai, MaCV = @MaCV, IMG = @IMG, MaTK = NULL where MaNV = @MaNV";
+                cmd.CommandText = "update nhanvien set Ho = @Ho, Ten = @Ten, NgaySinh = @NgaySinh, GioiTinh = @GioiTinh, SoDT = @SoDT, DiaChi = @DiaChi, TrangThai = @TrangThai, MaCV = @MaCV, IMG = @IMG, MaTK = @MaTK where MaNV = @MaNV";
                 cmd.Parameters.AddWithValue("@Ho", nv.Ho).SqlDbType = SqlDbType.NVarChar;
                 cmd.Parameters.AddWithValue("@Ten", nv.Ten).SqlDbType = SqlDbType.NVarChar;
                 cmd.Parameters.AddWithValue("@NgaySinh", nv.NgaySinh).SqlDbType = SqlDbType.DateTime;
@@ -195,7 +199,9 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@SoDT", nv.SoDT).SqlDbType = SqlDbType.NVarChar;
                 cmd.Parameters.AddWithValue("@DiaChi", nv.DiaChi).SqlDbType = SqlDbType.NVarChar;
                 cmd.Parameters.AddWithValue("@TrangThai", nv.TrangThai).SqlDbType = SqlDbType.Int;
-                cmd.Parameters.AddWithValue("@MaCV", nv.MaCV).SqlDbType = SqlDbType.Char;
+                cmd.Parameters.AddWithValue("@MaCV", nv.MaCV).SqlDbType = SqlDbType.NVarChar;
+                cmd.Parameters.AddWithValue("@MaTK", nv.MaTK).SqlDbType = SqlDbType.NVarChar;
+
                 cmd.Parameters.AddWithValue("@IMG", nv.Img).SqlDbType = SqlDbType.NVarChar;
                 cmd.Parameters.AddWithValue("@MaNV", nv.MaNV).SqlDbType = SqlDbType.Char;
 
