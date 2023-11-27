@@ -41,7 +41,7 @@ namespace DAL
 
 
 
-        public DataTable getListNhaSanXuatMini()
+        public DataTable getListNhaSanXuatMini(int trangThai)
         {
             DataTable dt = new DataTable();
             try
@@ -49,8 +49,9 @@ namespace DAL
                 Connect();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "select MaNSX, TenNSX from nhasanxuat where TrangThai = 1";
-                // cmd.CommandText = "select * from Khachhang";
+                cmd.CommandText = "select MaNSX, TenNSX from nhasanxuat where TrangThai = @TrangThai";
+                cmd.Parameters.AddWithValue("@TrangThai", trangThai);
+
                 cmd.Connection = conn;
                 SqlDataAdapter adt = new SqlDataAdapter(cmd);
                 adt.Fill(dt);

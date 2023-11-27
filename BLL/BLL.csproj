@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.NetCore.2.2.1\lib\net45\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
     </Reference>
@@ -68,6 +71,16 @@
     <Compile Include="BanHangBLL.cs" />
     <Compile Include="ChiTietKhuyenMaiBLL.cs" />
     <Compile Include="ChucVuBLL.cs" />
+    <Compile Include="Crypto\AES.cs" />
+    <Compile Include="Crypto\Affine.cs" />
+    <Compile Include="Crypto\Caesar.cs" />
+    <Compile Include="Crypto\DES.cs" />
+    <Compile Include="Crypto\Hill.cs" />
+    <Compile Include="Crypto\RSACrypto.cs" />
+    <Compile Include="Crypto\StringHelper.cs" />
+    <Compile Include="Crypto\Substitution.cs" />
+    <Compile Include="Crypto\Vigenere.cs" />
+    <Compile Include="Crypto\XOR.cs" />
     <Compile Include="CTHoaDonBLL.cs" />
     <Compile Include="CTPhieuNhapBLL.cs" />
     <Compile Include="HoaDonBLL.cs" />

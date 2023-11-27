@@ -48,7 +48,7 @@ namespace GUI
             unhideError();
 
         }
-        
+
 
         private void label5_Click(object sender, EventArgs e)
         {
@@ -114,7 +114,7 @@ namespace GUI
         {
             foreach (char c in input)
             {
-                if (!char.IsLetter(c))
+                if (!char.IsLetter(c) && !char.IsWhiteSpace(c))
                 {
                     return false;
                 }
@@ -176,22 +176,26 @@ namespace GUI
         }
         private void loadMaNSX()
         {
-            string mansx;
-            nsxBLL = new NhaSanXuatBLL();
-            mansx = nsxBLL.getMaxMaNhaSX();
-            if (mansx == "")
+            var sortedNSX = nsxBLL.getListNSX().AsEnumerable()
+                .OrderBy(row => row.Field<string>("MaNSX"))
+                .CopyToDataTable();
+
+            if (sortedNSX.Rows.Count > 0)
+            {
+                // Lấy dòng cuối cùng (đã được sắp xếp)
+                var lastMaNSX = sortedNSX.AsEnumerable().Last()["MaNSX"].ToString();
+
+                // Tiếp tục xử lý như bình thường
+                int lastNumber = int.Parse(lastMaNSX.Substring(3));
+                int newNumber = lastNumber + 1;
+                string newMaNSX = "NSX" + newNumber.ToString("D3");
+                txtMaNSX.Texts = newMaNSX;
+            }
+            else
             {
                 txtMaNSX.Texts = "NSX001";
             }
-            int tempNum = int.Parse(mansx.Substring(3));
-            if ((tempNum + 1) >= 10)
-            {
-                txtMaNSX.Texts = "NSX0" + (tempNum + 1).ToString();
-            }
-            else if (tempNum >= 1 && tempNum < 9)
-            {
-                txtMaNSX.Texts = "NSX00" + (tempNum + 1).ToString();
-            }
+
         }
 
         public void clearForm()
@@ -237,14 +241,14 @@ namespace GUI
 
             string trangThai = CheckAndSetColor(cbxTrangThai, label6);
             int trangThaiValue = (trangThai == "Hoạt động" ? 1 : 0);
-            if (ContainsNumber(TenNSX))
-            {
-                MessageBox.Show("Tên NSX không được chứa số!",
-                                "Lỗi",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                return;
-            }
+            //if (ContainsNumber(TenNSX))
+            //{
+            //    MessageBox.Show("Tên NSX không được chứa số!",
+            //                    "Lỗi",
+            //                    MessageBoxButtons.OK,
+            //                    MessageBoxIcon.Error);
+            //    return;
+            //}
             if ((string.IsNullOrWhiteSpace(MaNSX) || string.IsNullOrWhiteSpace(TenNSX) || string.IsNullOrWhiteSpace(SoDT) || string.IsNullOrWhiteSpace(DiaChi) || string.IsNullOrWhiteSpace(trangThai)))
             {
                 return;
@@ -269,7 +273,7 @@ namespace GUI
                    MessageBoxIcon.Error);
             }
 
-           
+
 
 
 
@@ -289,7 +293,7 @@ namespace GUI
 
         public void init()
         {
-            
+
             dgvNSX.DataSource = nsxBLL.getListNSX();
 
         }
@@ -303,7 +307,7 @@ namespace GUI
             btnSua.Enabled = false;
             btnXoa.Enabled = false;
 
-           
+
             init();
             loadMaNSX();
             clearForm();
@@ -325,13 +329,13 @@ namespace GUI
 
 
             btnSua.Enabled = true;
-            
+
 
             btnXoa.Enabled = true;
-            
+
 
             btnThem.Enabled = false;
-            
+
 
             int i = dgvNSX.CurrentRow.Index;
             txtMaNSX.Texts = dgvNSX.Rows[i].Cells[0].Value.ToString();
@@ -365,7 +369,7 @@ namespace GUI
 
                         btnSua.Enabled = false;
                         btnXoa.Enabled = false;
-                       
+
                         init();
                         loadMaNSX();
                         clearForm();
@@ -382,7 +386,7 @@ namespace GUI
                           MessageBoxIcon.Information);
 
                         init();
-                      
+
                     }
                 }
 
@@ -408,7 +412,7 @@ namespace GUI
 
                         btnSua.Enabled = false;
                         btnXoa.Enabled = false;
-                        
+
                         init();
                         loadMaNSX();
                         clearForm();
@@ -432,8 +436,8 @@ namespace GUI
                                         if (flag == 1)
                                         {
                                             MessageBox.Show("Thay đổi trạng thái thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                            init() ;
-                                            
+                                            init();
+
                                         }
                                         else
                                         {
@@ -455,7 +459,7 @@ namespace GUI
                     }
                 }
             }
-           
+
         }
 
         private void dgvNSX_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -547,20 +551,20 @@ namespace GUI
 
         private void txtTimKiem_KeyPress(object sender, KeyPressEventArgs e)
         {
-                if (e.KeyChar == (char)Keys.Enter)
-                {
-                    //btnTimKiem.PerformClick();
-                    btnTimKiem_Click_1(sender, e);
-                    e.Handled = true;
-                }
-            
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                //btnTimKiem.PerformClick();
+                btnTimKiem_Click_1(sender, e);
+                e.Handled = true;
+            }
+
         }
 
         private void cbxTimKiem_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-           
-                cbxItemsMacDinh = cbxTimKiem.SelectedItem.ToString();
-            
+
+            cbxItemsMacDinh = cbxTimKiem.SelectedItem.ToString();
+
         }
 
         private void dgvNSX_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -635,7 +639,7 @@ namespace GUI
 
 
 
-       
+
 
         private void chkKoHD_CheckedChanged(object sender, EventArgs e)
         {
@@ -661,7 +665,7 @@ namespace GUI
             statusCondition = string.Join(" OR ", statusConditions);
         }
 
-       
+
 
         private void rjComboBox1_OnSelectedIndexChanged(object sender, EventArgs e)
         {
@@ -675,10 +679,10 @@ namespace GUI
 
         private void txtSoDT__TextChanged(object sender, EventArgs e)
         {
-            CheckAndSetColorSDT(txtSoDT,label18);
-           // CheckAndSetColorSDT1(txtSoDT, label18);
+            CheckAndSetColorSDT(txtSoDT, label18);
+            // CheckAndSetColorSDT1(txtSoDT, label18);
         }
-      
+
         private string CheckAndSetColorSDT(RJTextBox textBox, Label label)
         {
             string text = textBox.Texts.Trim();
@@ -871,7 +875,7 @@ namespace GUI
             dgvNSX.Columns["SoDT"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dgvNSX.Columns["TrangThai"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
-           
+
 
             // Reset AutoSizeMode for each column after importing data
 
@@ -973,7 +977,7 @@ namespace GUI
                                 }
                             }
 
-                           if (col == 5) // Check 'TrangThai'
+                            if (col == 5) // Check 'TrangThai'
                             {
                                 string trangThai = cellValue;
 
