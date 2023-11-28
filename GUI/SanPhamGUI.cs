@@ -73,7 +73,7 @@ namespace GUI
             btnThem.Enabled = true;
             btnSua.Enabled = false;
             btnXoa.Enabled = false;
-            txtTonKho.Enabled = false;
+            //txtTonKho.Enabled = false;
             txtMaSP.Enabled = false;
         }
         private void SanPhamGUI_Load(object sender, EventArgs e)
@@ -106,7 +106,7 @@ namespace GUI
             btnSua.Enabled = false;
             btnXoa.Enabled = false;
             checkQuyen(quyenSanPham);
-            txtTonKho.Enabled = false;
+            //txtTonKho.Enabled = false;
             txtMaSP.Enabled = false;
             txtMaSP.Texts = "";
             loadMaSP();
@@ -490,7 +490,7 @@ namespace GUI
 
             int i = dgvSanPham.CurrentRow.Index;
             txtMaSP.Enabled = false;
-            txtTonKho.Enabled = false;
+            //txtTonKho.Enabled = false;
             txtMaSP.Texts = dgvSanPham.Rows[i].Cells[0].Value.ToString();
             txtTenSP.Texts = dgvSanPham.Rows[i].Cells[1].Value.ToString();
             txtTonKho.Texts = dgvSanPham.Rows[i].Cells[2].Value.ToString();

@@ -22,20 +22,20 @@ namespace GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestHoaDon());
+            //Application.Run(new TestHoaDon());
             //Application.Run(new GiaoDienGUI());
-            //DangNhapGUI loginForm = new DangNhapGUI();
-            //if (loginForm.ShowDialog() == DialogResult.OK)
-            //{
-            //    string maNV = loginForm.maNV;
-            //    string tenPQ = loginForm.tenPQ;
+            DangNhapGUI loginForm = new DangNhapGUI();
+            if (loginForm.ShowDialog() == DialogResult.OK)
+            {
+                string maNV = loginForm.maNV;
+                string tenPQ = loginForm.tenPQ;
 
-            //    mainForm = new GiaoDienGUI(maNV, tenPQ);
-            //    loginForm.Hide();
-            //    mainForm.ShowDialog();
-            //    loginForm.Dispose();
+                mainForm = new GiaoDienGUI(maNV, tenPQ);
+                loginForm.Hide();
+                mainForm.ShowDialog();
+                loginForm.Dispose();
 
-            //}
+            }
 
 
 

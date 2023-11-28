@@ -97,9 +97,9 @@ namespace DAL
                 Connect();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "UPDATE ChiTietHoaDon SET MaSP = @MaSP, TenSP = @TenSP, SoLuong = @SoLuong, " +
+                cmd.CommandText = "UPDATE ChiTietHoaDon SET TenSP = @TenSP, SoLuong = @SoLuong, " +
                                   "DonGiaBanDau = @DonGiaBanDau, DonGiaDaGiam = @DonGiaDaGiam, PhanTramKM = @PhanTramKM, " +
-                                  "ThanhTien = @ThanhTien WHERE MaHD = @MaHD";
+                                  "ThanhTien = @ThanhTien WHERE MaHD = @MaHD AND MaSP = @MaSP ";
 
                 cmd.Connection = conn;
 

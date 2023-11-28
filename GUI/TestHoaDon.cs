@@ -40,6 +40,7 @@ namespace GUI
             //    Console.WriteLine("------------------------------");
             //}
             //updateHoaDon();
+            updateCTHD();
         }
         public void updateCTHD()
         {
