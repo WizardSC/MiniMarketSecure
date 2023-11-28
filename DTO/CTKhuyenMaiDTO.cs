@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class ChiTietKhuyenMaiDTO
+    public class CTKhuyenMaiDTO
     {
         private string maKm;
         private string maSp;
         private int phanTramKm;
         private int trangThai;
-        public ChiTietKhuyenMaiDTO()
+        public CTKhuyenMaiDTO()
         {
            
         }

@@ -37,10 +37,6 @@ namespace BLL
             return Vigenere.EncryptVigenere(keyAES, keyVigenere);
         }
 
-        public string decryptKeyAES(string keyAES)
-        {
-            return Vigenere.DecryptVigenere(keyAES, keyVigenere);
-        }
         public DataTable getListLoai()
         {
 
@@ -102,24 +98,24 @@ namespace BLL
         public bool insert_LoaiSP(LoaiDTO loai)
         {
             loai.MaLoai = AES.EncryptAES(loai.MaLoai, keyAES);
-            loai.TenLoai = AES.EncryptAES(loai.TenLoai, keyAES);
+            loai.TenLoai = AES.EncryptAES(loai.TenLoai, newKeyAES);
             loai.TrangThaiLoai = XOR.EncryptXOR(loai.TrangThaiLoai, keyXOR);
             return loaiDAL.insertLoaiSP(loai);
         }
         public bool delete_LoaiSP(string MaLoai, out bool isLoiKhoaNgoai)
         {
-            MaLoai = AES.EncryptAES(MaLoai, keyAES);
+            MaLoai = AES.EncryptAES(MaLoai, newKeyAES);
             return loaiDAL.delete_LoaiSP(MaLoai, out isLoiKhoaNgoai);
         }
         public bool update_LoaiSP(int Trangthai, string MaLoai)
         {
-            MaLoai = AES.EncryptAES(MaLoai, keyAES);
+            //MaLoai = AES.EncryptAES(MaLoai, newKeyAES);
             Trangthai = XOR.EncryptXOR(Trangthai, keyXOR);
             return loaiDAL.update_LoaiSP(Trangthai, MaLoai);
         }
         public bool update_LoaiSP(LoaiDTO loai)
         {
-            loai.MaLoai = AES.EncryptAES(loai.MaLoai, newKeyAES);
+            //loai.MaLoai = AES.EncryptAES(loai.MaLoai, newKeyAES);
             loai.TenLoai = AES.EncryptAES(loai.TenLoai, newKeyAES);
             loai.TrangThaiLoai = XOR.EncryptXOR(loai.TrangThaiLoai, keyXOR);
             return loaiDAL.update_LoaiSP(loai);

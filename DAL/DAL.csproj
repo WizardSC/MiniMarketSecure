@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BanHangDAL.cs" />
-    <Compile Include="ChiTietKhuyenMaiDAL.cs" />
+    <Compile Include="CTKhuyenMaiDAL.cs" />
     <Compile Include="ChucVuDAL.cs" />
     <Compile Include="CTHoaDonDAL.cs" />
     <Compile Include="CTPhieuNhapDAL.cs" />

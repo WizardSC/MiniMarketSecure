@@ -412,6 +412,12 @@
     <Compile Include="TaiKhoanGUI.Designer.cs">
       <DependentUpon>TaiKhoanGUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="TestHoaDon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestHoaDon.Designer.cs">
+      <DependentUpon>TestHoaDon.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThongKeGUI.cs">
       <SubType>Form</SubType>
     </Compile>

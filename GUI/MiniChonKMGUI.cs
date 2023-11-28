@@ -15,7 +15,7 @@ namespace GUI
     public partial class MiniChonKMGUI : Form
     {
         private KhuyenMaiBLL kmBLL;
-        private ChiTietKhuyenMaiBLL ctkmBLL;
+        private CTKhuyenMaiBLL ctkmBLL;
         private int trangThaiKM;
         private int tongTienTT;
         private int dieuKienKM;
@@ -24,7 +24,7 @@ namespace GUI
         private string maKM1;
         private int phanTramKM1;
         // Khai báo biến để lưu trữ RowIndex
-        public List<ChiTietKhuyenMaiDTO> listCTKMinFormMini { get; set; }
+        public List<CTKhuyenMaiDTO> listCTKMinFormMini { get; set; }
         public List<string> MaKMinCTKMList { get; set; }
         public List<string> MaSPinCTKMList { get; set; }
         public List<int> PhantramKMinCTKMList { get; set; }
@@ -38,7 +38,7 @@ namespace GUI
         {
             InitializeComponent();
             kmBLL = new KhuyenMaiBLL();
-            ctkmBLL = new ChiTietKhuyenMaiBLL();
+            ctkmBLL = new CTKhuyenMaiBLL();
             dtKhuyenMai = kmBLL.getListDsKm();
             dgvKhuyenMai.DataSource = dtKhuyenMai;
             this.tongTienTT = tongTienTT;
@@ -48,7 +48,7 @@ namespace GUI
             PhantramKMinCTKMList = new List<int>();
             TrangThaiinCTKMList = new List<int>();
 
-            listCTKMinFormMini = new List<ChiTietKhuyenMaiDTO>();
+            listCTKMinFormMini = new List<CTKhuyenMaiDTO>();
         }
 
         public MiniChonKMGUI() : this(0) // Gọi hàm khởi tạo có tham số với giá trị mặc định 0
@@ -105,7 +105,7 @@ namespace GUI
 
         private void btnHuyBo_Click(object sender, EventArgs e)
         {
-            listCTKMinFormMini = new List<ChiTietKhuyenMaiDTO>();
+            listCTKMinFormMini = new List<CTKhuyenMaiDTO>();
             MaKM1 = "";
             this.Close();
 
@@ -132,8 +132,8 @@ namespace GUI
             if (dieuKienKM == 0 && phanTramKM1 == 0)
             {
                 dtCTKM = ctkmBLL.getListCTKM(MaKM1);
-                List<ChiTietKhuyenMaiDTO> listCTKM = dtCTKM.AsEnumerable()
-                        .Select(row => new ChiTietKhuyenMaiDTO
+                List<CTKhuyenMaiDTO> listCTKM = dtCTKM.AsEnumerable()
+                        .Select(row => new CTKhuyenMaiDTO
                         {
                             Makm = row.Field<string>("MaKm"),
                             Masp = row.Field<string>("MaSp"),
@@ -154,7 +154,7 @@ namespace GUI
             }
             else
             {
-                listCTKMinFormMini = new List<ChiTietKhuyenMaiDTO>();
+                listCTKMinFormMini = new List<CTKhuyenMaiDTO>();
             }
 
             this.Close();
@@ -187,7 +187,7 @@ namespace GUI
         {
             MaKM1 = "Không KM";
             PhanTramKM1 = 0;
-            listCTKMinFormMini = new List<ChiTietKhuyenMaiDTO>();
+            listCTKMinFormMini = new List<CTKhuyenMaiDTO>();
 
             this.Close();
         }

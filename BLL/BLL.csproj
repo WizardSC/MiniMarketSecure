@@ -69,7 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BanHangBLL.cs" />
-    <Compile Include="ChiTietKhuyenMaiBLL.cs" />
+    <Compile Include="CTKhuyenMaiBLL.cs" />
     <Compile Include="ChucVuBLL.cs" />
     <Compile Include="Crypto\AES.cs" />
     <Compile Include="Crypto\Affine.cs" />

@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChiTietKhuyenMaiDTO.cs" />
+    <Compile Include="CTKhuyenMaiDTO.cs" />
     <Compile Include="ChucVuDTO.cs" />
     <Compile Include="CTHoaDonDTO.cs" />
     <Compile Include="CTPhieuNhapDTO.cs" />

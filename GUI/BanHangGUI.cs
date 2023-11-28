@@ -15,6 +15,7 @@ using AForge.Video.DirectShow;
 using BLL;
 using DevExpress.Office.Utils;
 using DevExpress.XtraReports.UI;
+using DevExpress.XtraRichEdit.Utils;
 using DTO;
 using GUI.MyCustom;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
@@ -30,7 +31,7 @@ namespace GUI
         private int CurrentPage = 1;  // Trang hiện tại
         private int diemTLCuaKhachHang = 0; //Điểm TL hiện tại của khách hàng mua hàng
         private float phanTramKM = 0; //Phần trăm KM
-        private List<ChiTietKhuyenMaiDTO> listCTKM; //Dưới đây là list CTKM lấy từ form MiniCTKM;
+        private List<CTKhuyenMaiDTO> listCTKM; //Dưới đây là list CTKM lấy từ form MiniCTKM;
 
         private int soLuongTrongKhoLucBanDau = 0;
         private float giaTienLanDauLucCoKM = 0;
@@ -47,6 +48,8 @@ namespace GUI
         private DataTable dtNhanVien;
         private DataTable dtHoaDon;
         private List<SanPhamDTO> listSP;
+        private List<SanPhamDTO> sortedListSP;
+
         private List<NhanVienDTO> listNV;
         Dictionary<string, ProductInfo> gioHang = new Dictionary<string, ProductInfo>();
         private List<MyCustom.MyProductItem> allProductItems = new List<MyCustom.MyProductItem>(); //List chứa tất cả các item trong flpDanhSachSanPham
@@ -95,12 +98,14 @@ namespace GUI
             dtThongTinKhachHang = khBLL.getMiniListKhachHang();
             listNV = nvBLL.getListNV();
             listSP = spBLL.getListSP();
-            listCTKM = new List<ChiTietKhuyenMaiDTO>();
+            sortedListSP = sortListToFLP(listSP);
+
+            listCTKM = new List<CTKhuyenMaiDTO>();
             // Gọi hàm tính toán số trang
             searchValue = txtTimKiem.Texts;
             resultRows = GetDataRowsFromSearchTextBox(searchValue);
 
-            CalculateTotalPages(listSP);
+            CalculateTotalPages(sortedListSP);
             UpdateCurrentPage(resultRows);
 
             // Hiển thị trang hiện tại
@@ -108,6 +113,7 @@ namespace GUI
 
             loadMaHD();
             init();
+
         }
         // Các hàm khác ở đây
         public void init()
@@ -120,6 +126,12 @@ namespace GUI
             btnThanhToan.Enabled = false;
 
         }
+        public List<SanPhamDTO> sortListToFLP(List<SanPhamDTO> listSP)
+        {
+            List<SanPhamDTO> sortedList = listSP.OrderBy(sp => sp.MaSP).ToList();
+            return sortedList;
+        }
+
         private List<Tuple<string, string, string>> ConvertDataTableToList(DataTable dt)
         {
             List<Tuple<string, string, string>> listKH = new List<Tuple<string, string, string>>();
@@ -161,14 +173,20 @@ namespace GUI
         }
         private void loadMaHD()
         {
-            if (hdBLL.getListHoaDon().Rows.Count > 0)
+
+            var sortedHD = hdBLL.getListHoaDon().AsEnumerable()
+                                .OrderBy(row => row.Field<string>("MaHD"))
+                                .CopyToDataTable();
+            if (sortedHD.Rows.Count > 0)
             {
-                var lastMaHD = hdBLL.getListHoaDon().AsEnumerable().Last()["MaHD"].ToString();
+                var lastMaHD = sortedHD.AsEnumerable().Last()["MaHD"].ToString();
                 int lastNumber = int.Parse(lastMaHD.Substring(2));
                 int newNumber = lastNumber + 1;
                 string newMaHD = "HD" + newNumber.ToString("D3");
                 lblMaHD.Text = $"#{newMaHD}";
+
             }
+
             else
             {
                 lblMaHD.Text = "#HD001";
@@ -187,7 +205,7 @@ namespace GUI
             txtDonGia.Texts = "";
             pbImage.Image = pbImage.InitialImage;
             nudSoLuongMua.Value = 0;
-            
+
 
         }
         private void CalculateTotalPages(List<SanPhamDTO> productList)
@@ -211,7 +229,7 @@ namespace GUI
             {
                 MyCustom.MyProductItem item = new MyCustom.MyProductItem();
                 DataRow row = rows[i];
-
+                Console.WriteLine(row.Field<string>("MaSP"));
                 item.lblMaSP.Text = row.Field<string>("MaSP");
                 item.lblTenSP.Text = row.Field<string>("TenSP");
                 item.lblDonGia.Text = ConvertIntToVND(row.Field<int>("DonGiaBan"));
@@ -234,7 +252,7 @@ namespace GUI
                     // Nếu TrangThai == 0, thay đổi màu của item
                     item.BackColor = Color.Gray; // Hoặc bất kỳ màu nào bạn muốn
                     item.Enabled = false;
-                    
+
                 }
 
                 item.Margin = new Padding(4, 6, 4, 6);
@@ -273,7 +291,7 @@ namespace GUI
             var query = from DataRow row in dtSanPham.AsEnumerable()
                         where row.Field<string>(columnName).ToLower().Contains(textValue.ToLower())
                         select row;
-            List<DataRow> resultRows = query.ToList();
+            List<DataRow> resultRows = query.OrderBy(row => row.Field<string>("MaSP")).ToList();
             foreach (DataRow row in resultRows)
             {
                 maSPSearchList.Add(row.Field<string>("MaSP"));
@@ -317,7 +335,7 @@ namespace GUI
             foreach (DataRow row in resultRows)
             {
                 string loai = searchLoaibyMaSP(row.Field<string>("MaSP"));
-                Console.WriteLine(loai);
+
             }
             CalculateTotalPagesMini(maSPSearchList);
             if (TotalPages == 0)
@@ -391,7 +409,7 @@ namespace GUI
             int donGia = ConvertVNDToInt(clickedItem.lblDonGia.Text);
             int soLuong = 0;
 
-            foreach (SanPhamDTO sp in listSP)
+            foreach (SanPhamDTO sp in sortedListSP)
             {
                 if (sp.MaSP == maSP)
                 {
@@ -438,7 +456,7 @@ namespace GUI
         {
             string maSP = txtMaSP.Texts;
             int soLuong = 0;
-            foreach (SanPhamDTO sp in listSP)
+            foreach (SanPhamDTO sp in sortedListSP)
             {
                 if (sp.MaSP == maSP)
                 {
@@ -1254,7 +1272,7 @@ namespace GUI
                         {
                             MyCustom.MyProductItem productItem = (MyCustom.MyProductItem)control;
                             Console.WriteLine($"{productItem.lblMaSP.Text}: Enabled = {productItem.Enabled}");
-                            
+
                             if (productItem.lblMaSP.Text == maSPCanTim)
                             {
                                 if (productItem.Enabled == false)

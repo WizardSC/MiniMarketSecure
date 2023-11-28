@@ -72,7 +72,7 @@ namespace DAL
         }
 
         // danh sach km ko dieu kien
-        public DataTable getMaKmNoDK()
+        public DataTable getMaKmNoDK(string dieuKienKM, int phanTramKM)
         {
             DataTable dt = new DataTable();
             try
@@ -80,7 +80,9 @@ namespace DAL
                 Connect();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "select * from KhuyenMai where DieuKienKM = 0 AND PhanTramKM = 0 ";
+                cmd.CommandText = "select * from KhuyenMai where DieuKienKM = @DieuKienKM AND PhanTramKM = @PhanTramKM ";
+                cmd.Parameters.AddWithValue("@DieuKienKM", dieuKienKM);
+                cmd.Parameters.AddWithValue("@PhanTramKM", phanTramKM);
 
                 cmd.Connection = conn;
                 SqlDataAdapter adt = new SqlDataAdapter(cmd);

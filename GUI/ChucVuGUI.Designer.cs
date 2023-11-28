@@ -34,18 +34,22 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblErrMaCV = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtTen = new GUI.MyCustom.RJTextBox();
+            this.txtTenCV = new GUI.MyCustom.RJTextBox();
             this.lblErrTen = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cbxTrangThai = new GUI.MyCustom.RJComboBox();
             this.lblErrTrangThai = new System.Windows.Forms.Label();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.txtMaCV = new GUI.MyCustom.RJTextBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnThem = new GUI.MyCustom.RJButton();
             this.btnSua = new GUI.MyCustom.RJButton();
             this.btnXoa = new GUI.MyCustom.RJButton();
             this.btnReset = new GUI.MyCustom.RJButton();
             this.dgvChucVu = new System.Windows.Forms.DataGridView();
+            this.MaCV1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TenCV1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TrangThai1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
@@ -55,10 +59,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtMaCV11 = new GUI.MyCustom.RJTextBox();
-            this.MaCV1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TenCV1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TrangThai1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChucVu)).BeginInit();
@@ -105,31 +105,31 @@
             this.label3.Text = "Tên CV";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // txtTen
+            // txtTenCV
             // 
-            this.txtTen.BackColor = System.Drawing.SystemColors.Window;
-            this.txtTen.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(190)))), ((int)(((byte)(186)))));
-            this.txtTen.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(140)))), ((int)(((byte)(137)))));
-            this.txtTen.BorderRadius = 0;
-            this.txtTen.BorderSize = 2;
-            this.txtTen.Font = new System.Drawing.Font("Cambria", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTen.ForeColor = System.Drawing.Color.Black;
-            this.txtTen.Location = new System.Drawing.Point(106, 57);
-            this.txtTen.Margin = new System.Windows.Forms.Padding(4);
-            this.txtTen.MaximumSize = new System.Drawing.Size(171, 28);
-            this.txtTen.MinimumSize = new System.Drawing.Size(150, 28);
-            this.txtTen.Multiline = false;
-            this.txtTen.Name = "txtTen";
-            this.txtTen.Padding = new System.Windows.Forms.Padding(7);
-            this.txtTen.PasswordChar = false;
-            this.txtTen.PlaceholderColor = System.Drawing.Color.DarkGray;
-            this.txtTen.PlaceholderText = "";
-            this.txtTen.ReadOnly = false;
-            this.txtTen.Size = new System.Drawing.Size(171, 28);
-            this.txtTen.TabIndex = 3;
-            this.txtTen.Texts = "";
-            this.txtTen.UnderlinedStyle = false;
-            this.txtTen._TextChanged += new System.EventHandler(this.txtTen__TextChanged);
+            this.txtTenCV.BackColor = System.Drawing.SystemColors.Window;
+            this.txtTenCV.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(190)))), ((int)(((byte)(186)))));
+            this.txtTenCV.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(140)))), ((int)(((byte)(137)))));
+            this.txtTenCV.BorderRadius = 0;
+            this.txtTenCV.BorderSize = 2;
+            this.txtTenCV.Font = new System.Drawing.Font("Cambria", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTenCV.ForeColor = System.Drawing.Color.Black;
+            this.txtTenCV.Location = new System.Drawing.Point(106, 57);
+            this.txtTenCV.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTenCV.MaximumSize = new System.Drawing.Size(171, 28);
+            this.txtTenCV.MinimumSize = new System.Drawing.Size(150, 28);
+            this.txtTenCV.Multiline = false;
+            this.txtTenCV.Name = "txtTenCV";
+            this.txtTenCV.Padding = new System.Windows.Forms.Padding(7);
+            this.txtTenCV.PasswordChar = false;
+            this.txtTenCV.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.txtTenCV.PlaceholderText = "";
+            this.txtTenCV.ReadOnly = false;
+            this.txtTenCV.Size = new System.Drawing.Size(171, 28);
+            this.txtTenCV.TabIndex = 3;
+            this.txtTenCV.Texts = "";
+            this.txtTenCV.UnderlinedStyle = false;
+            this.txtTenCV._TextChanged += new System.EventHandler(this.txtTen__TextChanged);
             // 
             // lblErrTen
             // 
@@ -193,10 +193,10 @@
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.label2);
-            this.flowLayoutPanel2.Controls.Add(this.txtMaCV11);
+            this.flowLayoutPanel2.Controls.Add(this.txtMaCV);
             this.flowLayoutPanel2.Controls.Add(this.lblErrMaCV);
             this.flowLayoutPanel2.Controls.Add(this.label3);
-            this.flowLayoutPanel2.Controls.Add(this.txtTen);
+            this.flowLayoutPanel2.Controls.Add(this.txtTenCV);
             this.flowLayoutPanel2.Controls.Add(this.lblErrTen);
             this.flowLayoutPanel2.Controls.Add(this.label9);
             this.flowLayoutPanel2.Controls.Add(this.cbxTrangThai);
@@ -206,6 +206,33 @@
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(298, 661);
             this.flowLayoutPanel2.TabIndex = 6;
+            // 
+            // txtMaCV
+            // 
+            this.txtMaCV.BackColor = System.Drawing.SystemColors.Window;
+            this.txtMaCV.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(190)))), ((int)(((byte)(186)))));
+            this.txtMaCV.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(140)))), ((int)(((byte)(137)))));
+            this.txtMaCV.BorderRadius = 0;
+            this.txtMaCV.BorderSize = 2;
+            this.txtMaCV.Enabled = false;
+            this.txtMaCV.Font = new System.Drawing.Font("Cambria", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMaCV.ForeColor = System.Drawing.Color.Black;
+            this.txtMaCV.Location = new System.Drawing.Point(106, 4);
+            this.txtMaCV.Margin = new System.Windows.Forms.Padding(4);
+            this.txtMaCV.MaximumSize = new System.Drawing.Size(171, 28);
+            this.txtMaCV.MinimumSize = new System.Drawing.Size(150, 28);
+            this.txtMaCV.Multiline = false;
+            this.txtMaCV.Name = "txtMaCV";
+            this.txtMaCV.Padding = new System.Windows.Forms.Padding(2, 4, 2, 2);
+            this.txtMaCV.PasswordChar = false;
+            this.txtMaCV.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.txtMaCV.PlaceholderText = "";
+            this.txtMaCV.ReadOnly = false;
+            this.txtMaCV.Size = new System.Drawing.Size(171, 28);
+            this.txtMaCV.TabIndex = 3;
+            this.txtMaCV.Texts = "";
+            this.txtMaCV.UnderlinedStyle = false;
+            this.txtMaCV._TextChanged += new System.EventHandler(this.txtMaCV11__TextChanged);
             // 
             // flowLayoutPanel3
             // 
@@ -347,6 +374,33 @@
             this.dgvChucVu.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvChucVu_CellClick);
             this.dgvChucVu.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvChucVu_CellFormatting);
             // 
+            // MaCV1
+            // 
+            this.MaCV1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.MaCV1.DataPropertyName = "MaCV";
+            this.MaCV1.HeaderText = "Mã Chức Vụ";
+            this.MaCV1.Name = "MaCV1";
+            this.MaCV1.ReadOnly = true;
+            this.MaCV1.Width = 149;
+            // 
+            // TenCV1
+            // 
+            this.TenCV1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.TenCV1.DataPropertyName = "TenCV";
+            this.TenCV1.HeaderText = "Tên Chức Vụ";
+            this.TenCV1.Name = "TenCV1";
+            this.TenCV1.ReadOnly = true;
+            this.TenCV1.Width = 500;
+            // 
+            // TrangThai1
+            // 
+            this.TrangThai1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.TrangThai1.DataPropertyName = "TrangThai";
+            this.TrangThai1.HeaderText = "Trạng Thái";
+            this.TrangThai1.Name = "TrangThai1";
+            this.TrangThai1.ReadOnly = true;
+            this.TrangThai1.Width = 200;
+            // 
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -485,60 +539,6 @@
             this.label1.Text = "THÔNG TIN CHỨC VỤ";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // txtMaCV11
-            // 
-            this.txtMaCV11.BackColor = System.Drawing.SystemColors.Window;
-            this.txtMaCV11.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(190)))), ((int)(((byte)(186)))));
-            this.txtMaCV11.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(140)))), ((int)(((byte)(137)))));
-            this.txtMaCV11.BorderRadius = 0;
-            this.txtMaCV11.BorderSize = 2;
-            this.txtMaCV11.Enabled = false;
-            this.txtMaCV11.Font = new System.Drawing.Font("Cambria", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaCV11.ForeColor = System.Drawing.Color.Black;
-            this.txtMaCV11.Location = new System.Drawing.Point(106, 4);
-            this.txtMaCV11.Margin = new System.Windows.Forms.Padding(4);
-            this.txtMaCV11.MaximumSize = new System.Drawing.Size(171, 28);
-            this.txtMaCV11.MinimumSize = new System.Drawing.Size(150, 28);
-            this.txtMaCV11.Multiline = false;
-            this.txtMaCV11.Name = "txtMaCV11";
-            this.txtMaCV11.Padding = new System.Windows.Forms.Padding(2, 4, 2, 2);
-            this.txtMaCV11.PasswordChar = false;
-            this.txtMaCV11.PlaceholderColor = System.Drawing.Color.DarkGray;
-            this.txtMaCV11.PlaceholderText = "";
-            this.txtMaCV11.ReadOnly = false;
-            this.txtMaCV11.Size = new System.Drawing.Size(171, 28);
-            this.txtMaCV11.TabIndex = 3;
-            this.txtMaCV11.Texts = "";
-            this.txtMaCV11.UnderlinedStyle = false;
-            this.txtMaCV11._TextChanged += new System.EventHandler(this.txtMaCV11__TextChanged);
-            // 
-            // MaCV1
-            // 
-            this.MaCV1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.MaCV1.DataPropertyName = "MaCV";
-            this.MaCV1.HeaderText = "Mã Chức Vụ";
-            this.MaCV1.Name = "MaCV1";
-            this.MaCV1.ReadOnly = true;
-            this.MaCV1.Width = 149;
-            // 
-            // TenCV1
-            // 
-            this.TenCV1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.TenCV1.DataPropertyName = "TenCV";
-            this.TenCV1.HeaderText = "Tên Chức Vụ";
-            this.TenCV1.Name = "TenCV1";
-            this.TenCV1.ReadOnly = true;
-            this.TenCV1.Width = 500;
-            // 
-            // TrangThai1
-            // 
-            this.TrangThai1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.TrangThai1.DataPropertyName = "TrangThai";
-            this.TrangThai1.HeaderText = "Trạng Thái";
-            this.TrangThai1.Name = "TrangThai1";
-            this.TrangThai1.ReadOnly = true;
-            this.TrangThai1.Width = 200;
-            // 
             // ChucVuGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -566,7 +566,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblErrMaCV;
         private System.Windows.Forms.Label label3;
-        private MyCustom.RJTextBox txtTen;
+        private MyCustom.RJTextBox txtTenCV;
         private System.Windows.Forms.Label lblErrTen;
         private System.Windows.Forms.Label label9;
         private MyCustom.RJComboBox cbxTrangThai;
@@ -590,7 +590,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MaCV;
         private System.Windows.Forms.DataGridViewTextBoxColumn TenCV;
         private System.Windows.Forms.DataGridViewTextBoxColumn TrangThai;
-        private MyCustom.RJTextBox txtMaCV11;
+        private MyCustom.RJTextBox txtMaCV;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaCV1;
         private System.Windows.Forms.DataGridViewTextBoxColumn TenCV1;
         private System.Windows.Forms.DataGridViewTextBoxColumn TrangThai1;

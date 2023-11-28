@@ -105,21 +105,24 @@ namespace GUI
         }
         private void loadMaCV()
         {
-            cvBLL = new ChucVuBLL();
-            maCV = cvBLL.getMaxMaCV();
-            string lastMaCV = maCV;
-            if (lastMaCV == "")
+            var sortedCV = cvBLL.getListChucVu().AsEnumerable()
+                             .OrderBy(row => row.Field<string>("MaCV"))
+                             .CopyToDataTable();
+
+            if (sortedCV.Rows.Count > 0)
             {
-                txtMaCV11.Texts = "CV001";
+                // Lấy dòng cuối cùng (đã được sắp xếp)
+                var lastMaCV = sortedCV.AsEnumerable().Last()["MaCV"].ToString();
+
+                // Tiếp tục xử lý như bình thường
+                int lastNumber = int.Parse(lastMaCV.Substring(2));
+                int newNumber = lastNumber + 1;
+                string newMaCV = "CV" + newNumber.ToString("D3");
+                txtMaCV.Texts = newMaCV;
             }
-            int tempNum = int.Parse(lastMaCV.Substring(2));
-            if ((tempNum + 1) >= 10)
+            else
             {
-                txtMaCV11.Texts = "CV0" + (tempNum + 1).ToString();
-            }
-            else if (tempNum >= 1 && tempNum < 9)
-            {
-                txtMaCV11.Texts = "CV00" + (tempNum + 1).ToString();
+                txtMaCV.Texts = "CV001";
             }
         }
         private void loadCbxTimKiem()
@@ -203,8 +206,8 @@ namespace GUI
         }
         private void btnThem_Click(object sender, EventArgs e)
         {
-            string maCV = CheckAndSetColor(txtMaCV11, lblErrMaCV);
-            string ten = CheckAndSetColorTen(txtTen, lblErrTen);
+            string maCV = CheckAndSetColor(txtMaCV, lblErrMaCV);
+            string ten = CheckAndSetColorTen(txtTenCV, lblErrTen);
             string trangThai = CheckAndSetColor(cbxTrangThai, lblErrTrangThai);
             int trangThaiValue = (trangThai == "Hoạt động" ? 1 : 0);
             if ((string.IsNullOrWhiteSpace(ten) || string.IsNullOrWhiteSpace(trangThai)))
@@ -249,8 +252,8 @@ namespace GUI
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            string maCV = CheckAndSetColor(txtMaCV11, lblErrMaCV);
-            string ten = CheckAndSetColorTen(txtTen, lblErrTen);
+            string maCV = CheckAndSetColor(txtMaCV, lblErrMaCV);
+            string ten = CheckAndSetColorTen(txtTenCV, lblErrTen);
             string trangThai = CheckAndSetColor(cbxTrangThai, lblErrTrangThai);
             int trangThaiValue = (trangThai == "Hoạt động" ? 1 : 0);
             if ((string.IsNullOrWhiteSpace(ten) || string.IsNullOrWhiteSpace(trangThai)))
@@ -277,7 +280,7 @@ namespace GUI
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            string maCV = txtMaCV11.Texts;
+            string maCV = txtMaCV.Texts;
             string stringTrangThai = cbxTrangThai.SelectedItem.ToString();
             int trangThai = (stringTrangThai == "Hoạt động") ? 1 : 0;
             var choice = MessageBox.Show("Xóa chức vụ này?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -339,12 +342,12 @@ namespace GUI
 
         private void txtMaCV11__TextChanged(object sender, EventArgs e)
         {
-            CheckAndSetColor(txtMaCV11, lblErrMaCV);
+            CheckAndSetColor(txtMaCV, lblErrMaCV);
         }
 
         private void txtTen__TextChanged(object sender, EventArgs e)
         {
-            CheckAndSetColorTen(txtTen, lblErrTen);
+            CheckAndSetColorTen(txtTenCV, lblErrTen);
         }
 
         private void cbxTrangThai_OnSelectedIndexChanged(object sender, EventArgs e)
@@ -357,7 +360,7 @@ namespace GUI
             loadBtn();
             load_Form();
             loadMaCV();
-            txtTen.Texts = " ";
+            txtTenCV.Texts = " ";
             cbxTrangThai.SelectedIndex = -1;
             cbxTrangThai.Texts = "--Chọn trạng thái--";
             txtTimKiem.Texts = "";
@@ -372,8 +375,8 @@ namespace GUI
             checkQuyen(quyenChucVu);
 
             int i = dgvChucVu.CurrentRow.Index;
-            txtMaCV11.Texts = dgvChucVu.Rows[i].Cells[0].Value.ToString();
-            txtTen.Texts = dgvChucVu.Rows[i].Cells[1].Value.ToString();
+            txtMaCV.Texts = dgvChucVu.Rows[i].Cells[0].Value.ToString();
+            txtTenCV.Texts = dgvChucVu.Rows[i].Cells[1].Value.ToString();
             int trangThai = int.Parse(dgvChucVu.Rows[i].Cells[2].Value.ToString());
             cbxTrangThai.SelectedItem = (trangThai == 1) ? "Hoạt động" : "Không hoạt động";
         }

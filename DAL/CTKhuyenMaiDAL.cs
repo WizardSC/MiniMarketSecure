@@ -11,7 +11,7 @@ using System.Collections;
 
 namespace DAL
 {
-    public class ChiTietKhuyenMaiDAL : MSSQLConnect
+    public class CTKhuyenMaiDAL : MSSQLConnect
     {
         public DataTable getListCTKM(string maKM)
         {
@@ -66,7 +66,7 @@ namespace DAL
         }
 
 
-        public bool insert_CTKhuyenMai(ChiTietKhuyenMaiDTO CTKM_DTO)
+        public bool insert_CTKhuyenMai(CTKhuyenMaiDTO CTKM_DTO)
         {
 
             try
@@ -94,7 +94,7 @@ namespace DAL
                 Disconnect();
             }
         }
-        public bool Update_CTKhuyenMai(ChiTietKhuyenMaiDTO CTKM_DTO)
+        public bool Update_CTKhuyenMai(CTKhuyenMaiDTO CTKM_DTO)
         {
             MSSQLConnect dbConnect = new MSSQLConnect();
             try

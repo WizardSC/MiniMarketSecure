@@ -21,7 +21,7 @@ namespace GUI
         DataTable data = new DataTable();
         DataTable dataListMaKmNoDK = new DataTable();
         DataTable datagetListSanPham = new DataTable();
-        ChiTietKhuyenMaiBLL CTKhuyenMaiBLL = new ChiTietKhuyenMaiBLL();
+        CTKhuyenMaiBLL CTKhuyenMaiBLL = new CTKhuyenMaiBLL();
         KhuyenMaiBLL KmBLL = new KhuyenMaiBLL();
         SanPhamBLL SpBLL = new SanPhamBLL();
         private string cbxItemsMacDinh;
@@ -271,7 +271,7 @@ namespace GUI
                 return;
             }
 
-            ChiTietKhuyenMaiDTO CTKM_DTO = new ChiTietKhuyenMaiDTO();
+            CTKhuyenMaiDTO CTKM_DTO = new CTKhuyenMaiDTO();
             CTKM_DTO.Makm = idKm;
             CTKM_DTO.Masp = idSp;
             CTKM_DTO.PhanTramKm = int.Parse(phantram);
@@ -325,7 +325,7 @@ namespace GUI
             {
                 return;
             }
-            ChiTietKhuyenMaiDTO CTKM_DTO = new ChiTietKhuyenMaiDTO();
+            CTKhuyenMaiDTO CTKM_DTO = new CTKhuyenMaiDTO();
             CTKM_DTO.Makm = idKm;
             CTKM_DTO.Masp = idSp;
             CTKM_DTO.PhanTramKm = int.Parse(phantram);

@@ -113,6 +113,9 @@ namespace GUI
         }
         private void loadToFlpNhaCungCap()
         {
+            dtNhaCungCap.DefaultView.Sort = "MaNCC ASC";
+            dtNhaCungCap = dtNhaCungCap.DefaultView.ToTable();
+
             this.flpNhaCungCap.Controls.Clear();
             for (int i = 0; i < dtNhaCungCap.Rows.Count; i++)
             {

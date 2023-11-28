@@ -68,23 +68,24 @@ namespace GUI
         }
         private void loadMaKM()
         {
+            var sortedKM = kmBLL.getListDsKm().AsEnumerable()
+                                         .OrderBy(row => row.Field<string>("MaKM"))
+                                         .CopyToDataTable();
 
-            string MaKM;
+            if (sortedKM.Rows.Count > 0)
+            {
+                // Lấy dòng cuối cùng (đã được sắp xếp)
+                var lastMaKM = sortedKM.AsEnumerable().Last()["MaKM"].ToString();
 
-            MaKM = kmBLL.getMaxMaKM();
-            if (MaKM == "")
+                // Tiếp tục xử lý như bình thường
+                int lastNumber = int.Parse(lastMaKM.Substring(2));
+                int newNumber = lastNumber + 1;
+                string newMaKM = "KM" + newNumber.ToString("D3");
+                txtMaKM.Texts = newMaKM;
+            }
+            else
             {
                 txtMaKM.Texts = "KM001";
-                return;
-            }
-            int tempNum = int.Parse(MaKM.Substring(2));
-            if ((tempNum + 1) >= 10)
-            {
-                txtMaKM.Texts = "KM0" + (tempNum + 1).ToString();
-            }
-            else if (tempNum >= 1 && tempNum < 9)
-            {
-                txtMaKM.Texts = "KM00" + (tempNum + 1).ToString();
             }
         }
 

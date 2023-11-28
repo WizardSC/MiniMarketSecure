@@ -86,7 +86,7 @@
             this.dgvThongTinSPKM.RowTemplate.Height = 30;
             this.dgvThongTinSPKM.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvThongTinSPKM.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvThongTinSPKM.Size = new System.Drawing.Size(903, 128);
+            this.dgvThongTinSPKM.Size = new System.Drawing.Size(903, 298);
             this.dgvThongTinSPKM.TabIndex = 2;
             this.dgvThongTinSPKM.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvThongTinSPKM_CellFormatting);
             // 
@@ -160,11 +160,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(907, 130);
+            this.ClientSize = new System.Drawing.Size(907, 300);
             this.Controls.Add(this.dgvThongTinSPKM);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ThongTinSPKMGUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Thông tin chi tiết sản phẩm khuyến mãi";
