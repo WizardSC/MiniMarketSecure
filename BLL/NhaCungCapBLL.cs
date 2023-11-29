@@ -119,7 +119,7 @@ namespace BLL
         }
         public bool insertNhaCungCap(NhaCungCapDTO ncc)
         {
-            //ncc.MaNCC = AES.EncryptAES(ncc.MaNCC, newKeyAES);
+            ncc.MaNCC = AES.EncryptAES(ncc.MaNCC, newKeyAES);
             ncc.TenNCC = AES.EncryptAES(ncc.TenNCC, newKeyAES);
             ncc.DiaChi = AES.EncryptAES(ncc.DiaChi, newKeyAES);
             ncc.SoDT = AES.EncryptAES(ncc.SoDT, newKeyAES);
@@ -129,7 +129,7 @@ namespace BLL
         }
         public bool updateNhaCC(NhaCungCapDTO ncc)
         {
-            //ncc.MaNCC = AES.EncryptAES(ncc.MaNCC, newKeyAES);
+            ncc.MaNCC = AES.EncryptAES(ncc.MaNCC, newKeyAES);
             ncc.TenNCC = AES.EncryptAES(ncc.TenNCC, newKeyAES);
             ncc.DiaChi = AES.EncryptAES(ncc.DiaChi, newKeyAES);
             ncc.SoDT = AES.EncryptAES(ncc.SoDT, newKeyAES);

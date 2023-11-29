@@ -166,7 +166,7 @@ namespace DAL
                 //cmd.Parameters.Add(new SqlParameter("@IMG", SqlDbType.Image) { Value = DBNull.Value });
                 cmd.Parameters.Add(new SqlParameter("@MaTK", SqlDbType.NVarChar) { Value = DBNull.Value });
                 cmd.Parameters.AddWithValue("@IMG", nv.Img).SqlDbType = SqlDbType.NVarChar;
-                cmd.Parameters.AddWithValue("@MaTK", nv.MaTK).SqlDbType = SqlDbType.NVarChar;
+                //cmd.Parameters.AddWithValue("@MaTK", nv.MaTK).SqlDbType = SqlDbType.NVarChar;
                 cmd.Parameters.AddWithValue("@MaCV", nv.MaCV).SqlDbType = SqlDbType.Char;
 
                 cmd.ExecuteNonQuery();

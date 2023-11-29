@@ -45,7 +45,7 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@DiemSuDung", (object)hd.DiemSuDung ?? DBNull.Value).SqlDbType = SqlDbType.Int;
                 cmd.Parameters.AddWithValue("@TongTien", (object)hd.TongTien ?? DBNull.Value).SqlDbType = SqlDbType.Float;
                 cmd.Parameters.AddWithValue("@DiemNhanDuoc", (object)hd.DiemNhanDuoc ?? DBNull.Value).SqlDbType = SqlDbType.Int;
-                cmd.Parameters.AddWithValue("@MaKM", (object)hd.MaKM ?? DBNull.Value).SqlDbType = SqlDbType.Char; //Cho phép null
+                cmd.Parameters.AddWithValue("@MaKM", (object)hd.MaKM ?? DBNull.Value).SqlDbType = SqlDbType.Char; 
                 cmd.Parameters.AddWithValue("@MaNV", hd.MaNV).SqlDbType = SqlDbType.Char;
                 cmd.Parameters.AddWithValue("@MaKH", hd.MaKH).SqlDbType = SqlDbType.Char;
 

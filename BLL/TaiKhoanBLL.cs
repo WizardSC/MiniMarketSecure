@@ -23,6 +23,8 @@ namespace BLL
             tkDAL = new TaiKhoanDAL();
 
             keyAES = "MUAXUANDENABCDEF";
+            string keyString = "MUAXUANDENABCDEF";
+           
             keyXOR = 33;
             keyVigenere = "GIANGSINH";
             newKeyAES = (encryptKeyAES(keyAES));

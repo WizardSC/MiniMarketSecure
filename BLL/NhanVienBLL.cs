@@ -71,7 +71,7 @@ namespace BLL
                         AES.DecryptAES(row.Field<string>("SoDT"), newKeyAES),
                         AES.DecryptAES(row.Field<string>("DiaChi"), newKeyAES),
                         XOR.DecryptXOR(row.Field<int>("TrangThai"),keyXOR),
-                        AES.DecryptAES(row.Field<string>("MaTK"), newKeyAES),
+                        row.Field<string>("MaTK") != null ? AES.DecryptAES(row.Field<string>("MaTK"), newKeyAES) : null,
                         AES.DecryptAES(row.Field<string>("MaCV"), newKeyAES),
                         row.Field<string>("IMG"),
 
@@ -102,7 +102,7 @@ namespace BLL
                         AES.DecryptAES(row.Field<string>("MaNV"), newKeyAES),
                         AES.DecryptAES(row.Field<string>("Ho"), newKeyAES),
                         AES.DecryptAES(row.Field<string>("Ten"), newKeyAES),
-                        AES.DecryptAES(row.Field<string>("MaTK"), newKeyAES),
+                        row.Field<string>("MaTK") != null ? AES.DecryptAES(row.Field<string>("MaTK"), newKeyAES) : null,
                         AES.DecryptAES(row.Field<string>("MaCV"), newKeyAES),
                     }, false))
                     .CopyToDataTable();
@@ -130,7 +130,7 @@ namespace BLL
                     AES.DecryptAES(row.Field<string>("MaNV"), newKeyAES),
                     AES.DecryptAES(row.Field<string>("Ho"), newKeyAES),
                     AES.DecryptAES(row.Field<string>("Ten"), newKeyAES),
-                    AES.DecryptAES(row.Field<string>("MaTK"), newKeyAES),
+                    row.Field<string>("MaTK") != null ? AES.DecryptAES(row.Field<string>("MaTK"), newKeyAES) : null,
                     AES.DecryptAES(row.Field<string>("MaCV"), newKeyAES),
                         row.Field<DateTime>("NgayLap"),
 
@@ -162,7 +162,7 @@ namespace BLL
                         AES.DecryptAES(row.Field<string>("MaNV"), newKeyAES),
                         AES.DecryptAES(row.Field<string>("Ho"), newKeyAES),
                         AES.DecryptAES(row.Field<string>("Ten"), newKeyAES),
-                        AES.DecryptAES(row.Field<string>("MaTK"), newKeyAES),
+                        row.Field<string>("MaTK") != null ? AES.DecryptAES(row.Field<string>("MaTK"), newKeyAES) : null,
                         AES.DecryptAES(row.Field<string>("MaCV"), newKeyAES),
 
                         row.Field<DateTime>("NgayLap"),
@@ -189,7 +189,7 @@ namespace BLL
             nv.DiaChi = AES.EncryptAES(nv.DiaChi, newKeyAES);
             nv.SoDT = AES.EncryptAES(nv.SoDT, newKeyAES);
             nv.TrangThai = XOR.EncryptXOR(nv.TrangThai, keyXOR);
-            nv.MaTK = AES.EncryptAES(nv.MaTK, newKeyAES);
+            nv.MaTK = string.IsNullOrWhiteSpace(nv.MaTK) ? null : AES.EncryptAES(nv.MaTK, newKeyAES);
             nv.MaCV = AES.EncryptAES(nv.MaCV, newKeyAES);
 
             return nvDAL.insertNhanVien(nv);

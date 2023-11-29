@@ -48,7 +48,7 @@ namespace BLL
                         row.Field<int>("DiemSuDung"),
                         row.Field<int>("TongTien"),
                         row.Field<int>("DiemNhanDuoc"),
-                        AES.DecryptAES(row.Field<string>("MaKM"), newKeyAES),
+                        row.Field<string>("MaKM") != null ? AES.DecryptAES(row.Field<string>("MaKM"), newKeyAES) : null,
                         AES.DecryptAES(row.Field<string>("MaNV"), newKeyAES),
                         AES.DecryptAES(row.Field<string>("MaKH"), newKeyAES),
 
@@ -73,9 +73,11 @@ namespace BLL
             //hd.DiemSuDung = XOR.EncryptXOR(hd.DiemSuDung, keyXOR);
             //hd.TongTien = XOR.EncryptXOR(Convert.ToInt32(hd.TongTien), keyXOR);
             //hd.DiemNhanDuoc = XOR.EncryptXOR(hd.DiemNhanDuoc, keyXOR);
-            hd.MaKM = AES.EncryptAES(hd.MaKM, newKeyAES);
+
             hd.MaNV = AES.EncryptAES(hd.MaNV, newKeyAES);
             hd.MaKH = AES.EncryptAES(hd.MaKH, newKeyAES);
+            hd.MaKM = string.IsNullOrWhiteSpace(hd.MaKM) ? null : AES.EncryptAES(hd.MaKM, newKeyAES);
+
             return hdDAL.insertHoaDon(hd);
         }
         public bool updateHoaDon(HoaDonDTO hd)
