@@ -81,10 +81,7 @@ namespace BLL
 
             return cvDAL.deleteChucVu(maCV, out isLoiKhoaNgoai);
         }
-        public string getMaxMaCV()
-        {
-            return cvDAL.getMaxMaChucVu();
-        }
+        
         public bool updateTrangThai(int trangThai, string maCV)
         {
             maCV = AES.EncryptAES(maCV, newKeyAES);

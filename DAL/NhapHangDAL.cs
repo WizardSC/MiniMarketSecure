@@ -10,14 +10,15 @@ namespace DAL
 {
     public class NhapHangDAL : MSSQLConnect
     {
-        public DataTable getListSPToNhapHang()
+        public DataTable getListSPToNhapHang(int trangThai)
         {
             DataTable dt = new DataTable();
             try
             {
                 Connect();
-                string sql = "select MaSP, TenSP, SoLuong, DonGiaNhap, TenLoai, TenNCC from SanPham join LoaiSP on LoaiSP.MaLoai = SanPham.MaLoai join NhaCungCap on NhaCungCap.MaNCC = SanPham.MaNCC where SanPham.trangthai = 1";
+                string sql = "select MaSP, TenSP, SoLuong, DonGiaNhap, TenLoai, TenNCC from SanPham join LoaiSP on LoaiSP.MaLoai = SanPham.MaLoai join NhaCungCap on NhaCungCap.MaNCC = SanPham.MaNCC where SanPham.trangthai = @TrangThai";
                 SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@TrangThai", SqlDbType.Char).Value = trangThai;
                 SqlDataAdapter adt = new SqlDataAdapter(cmd);
                 adt.Fill(dt);
             }
@@ -32,30 +33,6 @@ namespace DAL
             }
             return dt;
         }
-        public DataTable getThongTinCTPhieuNhap(string maPN)
-        {
-
-            DataTable dt = new DataTable();
-            try
-            {
-                Connect();
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "select MaSP,TenSP,SoLuong,DonGiaNhap,ThanhTien from ChiTietPhieuNhap where MaPN = @MaPN";
-                cmd.Connection = conn;
-                cmd.Parameters.Add("@MaPN", SqlDbType.Char).Value = maPN;
-                SqlDataAdapter adt = new SqlDataAdapter(cmd);
-                adt.Fill(dt);
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-            finally
-            {
-                Disconnect();
-            }
-            return dt;
-        }
+        
     }
 }

@@ -60,7 +60,7 @@ namespace BLL
                         AES.DecryptAES(row.Field<string>("DiaChi"), newKeyAES),
 
                         XOR.DecryptXOR(row.Field<int>("TrangThai"),keyXOR),
-                        XOR.DecryptXOR(row.Field<int>("DiemTichLuy"),keyXOR),
+                        row.Field<int>("DiemTichLuy"),
 
                         row.Field<string>("IMG"),
 
@@ -97,7 +97,7 @@ namespace BLL
                         AES.DecryptAES(row.Field<string>("MaKH"), newKeyAES),
                         AES.DecryptAES(row.Field<string>("Ho"), newKeyAES),
                         AES.DecryptAES(row.Field<string>("Ten"), newKeyAES),
-                        XOR.DecryptXOR(row.Field<int>("DiemTichLuy"),keyXOR),
+                        row.Field<int>("DiemTichLuy"),
                     }, false))
                     .CopyToDataTable();
                 dtNCC.DefaultView.Sort = "MaKH ASC";
@@ -121,7 +121,7 @@ namespace BLL
             kh.DiaChi = AES.EncryptAES(kh.DiaChi, newKeyAES);
             kh.SoDT = AES.EncryptAES(kh.SoDT, newKeyAES);
             kh.TrangThai = XOR.EncryptXOR(kh.TrangThai, keyXOR);
-            kh.DiemTichLuy = XOR.EncryptXOR(kh.DiemTichLuy, keyXOR);
+            //kh.DiemTichLuy = XOR.EncryptXOR(kh.DiemTichLuy, keyXOR);
 
 
             return khDAL.insertKhachHang(kh);
@@ -138,7 +138,7 @@ namespace BLL
             kh.DiaChi = AES.EncryptAES(kh.DiaChi, newKeyAES);
             kh.SoDT = AES.EncryptAES(kh.SoDT, newKeyAES);
             kh.TrangThai = XOR.EncryptXOR(kh.TrangThai, keyXOR);
-            kh.DiemTichLuy = XOR.EncryptXOR(kh.DiemTichLuy, keyXOR);
+            //kh.DiemTichLuy = XOR.EncryptXOR(kh.DiemTichLuy, keyXOR);
 
             return khDAL.updateKhachHang(kh);
         }
@@ -146,7 +146,7 @@ namespace BLL
         public bool updateDiemTL(string maKH, int diemTL)
         {
             maKH = AES.EncryptAES(maKH, newKeyAES);
-            diemTL = XOR.EncryptXOR(diemTL, keyXOR);
+            //diemTL = XOR.EncryptXOR(diemTL, keyXOR);
 
             return khDAL.updateDiemTichLuy(maKH, diemTL);
         }

@@ -66,14 +66,23 @@ namespace GUI
         }
         private void loadMaTK()
         {
-            string maTK = tkBLL.getLastMaTK();
-            if (string.IsNullOrWhiteSpace(maTK))
+            if (tkBLL.getListTaiKhoan().Rows.Count > 0)
             {
-                txtMaTK.Texts = "TK001";
+                var sortedTK = tkBLL.getListTaiKhoan().AsEnumerable()
+                               .OrderBy(row => row.Field<string>("MaTK"))
+                               .CopyToDataTable();
+                var lastMaTK = sortedTK.AsEnumerable().Last()["MaTK"].ToString();
+                int lastNumber = int.Parse(lastMaTK.Substring(2));
+                int newNumber = lastNumber + 1;
+                string newMaTK = "TK" + newNumber.ToString("D3");
+                txtMaTK.Texts = $"{newMaTK}";
+
             }
+
             else
             {
-                txtMaTK.Texts = maTK;
+                txtMaTK.Texts = "TK001";
+
             }
         }
         private string searchTenCVbyMaCV(string maCV)
@@ -85,7 +94,7 @@ namespace GUI
             return tenCV;
         }
 
-        private (string TenDangNhap, string MatKhau, byte TrangThai) GetTenDNandMK(string maNV, DataTable dtTaiKhoan)
+        private (string TenDangNhap, string MatKhau, int TrangThai) GetTenDNandMK(string maNV, DataTable dtTaiKhoan)
         {
             var query = from row in dtTaiKhoan.AsEnumerable()
                         where row.Field<string>("MaNV") == maNV
@@ -93,7 +102,7 @@ namespace GUI
                         {
                             TenDangNhap = row.Field<string>("TenDangNhap"),
                             MatKhau = row.Field<string>("MatKhau"),
-                            TrangThai = row.Field<byte>("TrangThai")
+                            TrangThai = row.Field<int>("TrangThai")
                         };
 
             var result = query.FirstOrDefault(); // Lấy dòng đầu tiên hoặc null nếu không có dòng nào thỏa mãn điều kiện
@@ -332,7 +341,7 @@ namespace GUI
                 TaiKhoanDTO tk = new TaiKhoanDTO();
                 tk.MaTK = txtMaTK.Texts;
                 string tenDangNhap = CheckAndSetColor(txtTenDangNhap, lblErrUsername, 6);
-                string matKhau = CheckAndSetColor(txtMatKhau, lblErrPassword, 6);
+                string matKhau = CheckAndSetColor(txtMatKhau, lblErrPassword, 5);
                 tk.NgayLap = dtpNgayLap.Value;
                 tk.MaNV = maNV;
                 tk.Quyen = txtQuyen.Texts;
@@ -370,7 +379,7 @@ namespace GUI
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
-                nvBLL.updateTaiKhoan(tk.MaTK, maNV);
+                nvBLL.updateTaiKhoan(txtMaTK.Texts, maNV);
                 dgvNhanVien.DataSource = nvBLL.getListNVNoHasTaiKhoan();
 
                 resetField();

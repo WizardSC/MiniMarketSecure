@@ -50,10 +50,10 @@ namespace BLL
                     {
                         AES.DecryptAES(row.Field<string>("MaSP"), newKeyAES),
                         AES.DecryptAES(row.Field<string>("TenSP"), newKeyAES),
-                        XOR.DecryptXOR(row.Field<int>("SoLuong"), keyXOR),
-                        XOR.DecryptXOR(row.Field<int>("DonGiaBanDau"), keyXOR),
-                        XOR.DecryptXOR(row.Field<int>("DonGiaDaGiam"), keyXOR),
-                        XOR.DecryptXOR(row.Field<int>("ThanhTien"), keyXOR),
+                        row.Field<int>("SoLuong"),
+                        row.Field<int>("DonGiaBanDau"), 
+                        row.Field<int>("DonGiaDaGiam"), 
+                        row.Field<int>("ThanhTien"),
                         // Thêm các trường cần giải mã khác nếu có
                     }, false))
                     .CopyToDataTable();
@@ -69,15 +69,20 @@ namespace BLL
         }
         public bool insertCTHoaDon(CTHoaDonDTO cthd)
         {
-            cthd.MaHD = AES.DecryptAES(cthd.MaHD, newKeyAES);
-            cthd.MaSP = AES.DecryptAES(cthd.MaSP, newKeyAES);
+            Console.WriteLine("MaHD :" + cthd.MaHD);
 
-            cthd.TenSP = AES.DecryptAES(cthd.TenSP, newKeyAES);
-            cthd.SoLuong = XOR.DecryptXOR(cthd.SoLuong, keyXOR);
-            cthd.DonGiaBanDau = XOR.DecryptXOR(cthd.DonGiaBanDau, keyXOR);
-            cthd.DonGiaDaGiam = XOR.DecryptXOR(cthd.DonGiaDaGiam, keyXOR);
-            cthd.PhanTramKM = XOR.DecryptXOR(cthd.PhanTramKM, keyXOR);
-            cthd.ThanhTien = XOR.DecryptXOR(cthd.ThanhTien, keyXOR);
+            cthd.MaHD = AES.EncryptAES(cthd.MaHD, newKeyAES);
+            cthd.MaSP = AES.EncryptAES(cthd.MaSP, newKeyAES);
+            cthd.TenSP = AES.EncryptAES(cthd.TenSP, newKeyAES);
+            //cthd.SoLuong = XOR.EncryptXOR(cthd.SoLuong, keyXOR);
+            //cthd.DonGiaBanDau = XOR.EncryptXOR(cthd.DonGiaBanDau, keyXOR);
+            //cthd.DonGiaDaGiam = XOR.EncryptXOR(cthd.DonGiaDaGiam, keyXOR);
+            //cthd.PhanTramKM = XOR.EncryptXOR(cthd.PhanTramKM, keyXOR);
+            //cthd.ThanhTien = XOR.EncryptXOR(cthd.ThanhTien, keyXOR);
+            Console.WriteLine("MaHD :" + cthd.MaHD); 
+            Console.WriteLine("MaSP :" + cthd.MaSP);
+
+            //return true;
             return cthdDAL.insertCTHoaDon(cthd);
         }
 

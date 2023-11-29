@@ -16,7 +16,7 @@ namespace GUI
 {
     public partial class PhieuNhapGUI : Form
     {
-        private PhieuNhapT_BLL PnBLL;
+        private PhieuNhapBLL PnBLL;
         private ChiTietPhieuNhapGUI ChiTietPN;
         private string currentSearch;
         private string textSearchCondition = ""; // Biến để lưu trữ điều kiện từ textbox tìm kiếm
@@ -30,7 +30,7 @@ namespace GUI
         public PhieuNhapGUI()
         {
             InitializeComponent();
-            PnBLL = new PhieuNhapT_BLL();
+            PnBLL = new PhieuNhapBLL();
             loadDataToCBX(cbxTimKiem);
         }
 

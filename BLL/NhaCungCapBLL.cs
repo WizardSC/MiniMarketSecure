@@ -107,7 +107,15 @@ namespace BLL
         }
         public NhaCungCapDTO getNhaCungCapbyMaNCC(string maNCC)
         {
-            return nccDAL.getNhaCungCapbyMaNCC(maNCC);
+            maNCC = AES.EncryptAES(maNCC, newKeyAES);
+
+            NhaCungCapDTO ncc = nccDAL.getNhaCungCapbyMaNCC(maNCC);
+            ncc.TenNCC = AES.DecryptAES(ncc.TenNCC, newKeyAES);
+            ncc.DiaChi= AES.DecryptAES(ncc.DiaChi, newKeyAES);
+            ncc.SoDT = AES.DecryptAES(ncc.SoDT, newKeyAES);
+            ncc.SoFAX = AES.DecryptAES(ncc.SoFAX, newKeyAES);
+
+            return ncc;
         }
         public bool insertNhaCungCap(NhaCungCapDTO ncc)
         {

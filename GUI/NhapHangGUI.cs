@@ -101,14 +101,23 @@ namespace GUI
         }
         private void loadMaPN()
         {
-            string maPN = pnBLL.getLastMaPN();
-            if (string.IsNullOrWhiteSpace(maPN))
+            if (pnBLL.getListDsPhieuNhap().Rows.Count > 0)
             {
-                lblMaPN.Text = "#PN001";
+                var sortedPN = pnBLL.getListDsPhieuNhap().AsEnumerable()
+                               .OrderBy(row => row.Field<string>("MaPN"))
+                               .CopyToDataTable();
+                var lastMaPN = sortedPN.AsEnumerable().Last()["MaPN"].ToString();
+                int lastNumber = int.Parse(lastMaPN.Substring(2));
+                int newNumber = lastNumber + 1;
+                string newMaPN = "PN" + newNumber.ToString("D3");
+                lblMaPN.Text = $"#{newMaPN}";
+
             }
+
             else
             {
-                lblMaPN.Text = maPN;
+                lblMaPN.Text = "#PN001";
+
             }
         }
         private void loadToFlpNhaCungCap()
@@ -220,9 +229,7 @@ namespace GUI
         private DataTable searchWithTenNCC(string tenNCC)
         {
             DataTable nhaCungCapTable = dtSanPham.Clone(); // DataTable đã tồn tại
-            ;
-
-
+            
             var nhaCungCap = dtSanPham.AsEnumerable()
                 .Where(row => row.Field<string>("TenNCC") == tenNCC)
                 .ToList();
@@ -400,7 +407,7 @@ namespace GUI
             {
                 thongTinSanPham sanPham = pair.Value;
                 CTPhieuNhapDTO ctpn = new CTPhieuNhapDTO();
-                ctpn.MaPN = pn.MaPN;
+                ctpn.MaPN = lblMaPN.Text.Substring(1);
                 ctpn.MaSP = sanPham.MaSP;
                 ctpn.TenSP = sanPham.TenSP;
                 ctpn.SoLuong = sanPham.SoLuong;

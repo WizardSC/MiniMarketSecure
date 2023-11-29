@@ -68,8 +68,8 @@ namespace DAL
                 Connect();
                 string sql = "insert into ChiTietHoaDon values (@MaHD, @MaSP, @TenSP, @SoLuong, @DonGiaBanDau, @DonGiaDaGiam, @PhanTramKM, @ThanhTien)";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@MaHD", SqlDbType.Char).Value = cthd.MaHD;
-                cmd.Parameters.Add("@MaSP", SqlDbType.Char).Value = cthd.MaSP;
+                cmd.Parameters.Add("@MaHD", SqlDbType.NVarChar).Value = cthd.MaHD;
+                cmd.Parameters.Add("@MaSP", SqlDbType.NVarChar).Value = cthd.MaSP;
                 cmd.Parameters.Add("@TenSP", SqlDbType.NVarChar).Value = cthd.TenSP;
                 cmd.Parameters.Add("@SoLuong", SqlDbType.Int).Value = cthd.SoLuong;
                 cmd.Parameters.Add("@DonGiaBanDau", SqlDbType.Int).Value = cthd.DonGiaBanDau;

@@ -23,19 +23,18 @@ namespace GUI
             InitializeComponent();
             tkBLL = new TaiKhoanBLL();
             dtTaiKhoan = tkBLL.getListTaiKhoan();
-            Console.WriteLine(1);
         }
 
-        private (string MaNV, string TenDangNhap, string MatKhau, string Quyen, byte TrangThai) getTaiKhoan(string tenDangNhap, string matKhau)
+        private (string MaNV, string TenDangNhap, string MatKhau, string Quyen, int TrangThai) getTaiKhoan(string tenDangNhap, string matKhau)
         {
 
             var query = from row in dtTaiKhoan.AsEnumerable()
-                        where (row.Field<string>("TenDangNhap") == tenDangNhap && row.Field<string>("MatKhau") == matKhau)
+                        where (row.Field<string>("TenDangNhap") == tenDangNhap && tkBLL.comparePassword(matKhau, row.Field<string>("MatKhau")))
                         select new
                         {
                             TenDangNhap = row.Field<string>("TenDangNhap"),
                             MatKhau = row.Field<string>("MatKhau"),
-                            TrangThai = row.Field<byte>("TrangThai"),
+                            TrangThai = row.Field<int>("TrangThai"),
                             MaNV = row.Field<string>("MaNV"),
                             Quyen = row.Field<string>("Quyen")
                         };
@@ -67,7 +66,7 @@ namespace GUI
                 MessageBox.Show("Vui lòng nhập mật khẩu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            (string MaNV, string TenDangNhap, string MatKhau, string Quyen, byte TrangThai) = getTaiKhoan(tenDangNhap, matKhau);
+            (string MaNV, string TenDangNhap, string MatKhau, string Quyen, int TrangThai) = getTaiKhoan(tenDangNhap, matKhau);
             if (TenDangNhap == string.Empty || MatKhau == string.Empty)
             {
                 MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);

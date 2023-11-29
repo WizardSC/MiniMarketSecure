@@ -10,7 +10,7 @@ using DTO;
 
 namespace DAL
 {
-    public class PhieuNhap_DAL : MSSQLConnect
+    public class PhieuNhapDAL : MSSQLConnect
     {
         public DataTable getListPhieuNhap()
         {
@@ -38,27 +38,27 @@ namespace DAL
             }
             return dt;
         }
-        public string getLastMaPN()
-        {
-            try
-            {
-                Connect();
-                string sql = "Select top 1 MaPN from phieunhap order by MaPN DESC";
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                string lastMaPN = cmd.ExecuteScalar() as string;
-                return lastMaPN;
-            }
+        //public string getLastMaPN()
+        //{
+        //    try
+        //    {
+        //        Connect();
+        //        string sql = "Select top 1 MaPN from phieunhap order by MaPN DESC";
+        //        SqlCommand cmd = new SqlCommand(sql, conn);
+        //        string lastMaPN = cmd.ExecuteScalar() as string;
+        //        return lastMaPN;
+        //    }
             
-            catch (Exception ex)
-            {
-                Console.WriteLine("Lỗi: " + ex.Message);
-                return null;
-            }
-            finally
-            {
-                Disconnect();
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("Lỗi: " + ex.Message);
+        //        return null;
+        //    }
+        //    finally
+        //    {
+        //        Disconnect();
+        //    }
+        //}
         public bool insertPhieuNhap(PhieuNhapDTO pn)
         {
             try

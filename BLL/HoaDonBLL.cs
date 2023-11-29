@@ -44,10 +44,10 @@ namespace BLL
                     {
                         AES.DecryptAES(row.Field<string>("MaHD"), newKeyAES),
                         row.Field<DateTime>("NgayLapHD"),
-                        XOR.DecryptXOR(row.Field<int>("TongTienTT"), keyXOR),
-                        XOR.DecryptXOR(row.Field<int>("DiemSuDung"), keyXOR),
-                        XOR.DecryptXOR(row.Field<int>("TongTien"), keyXOR),
-                        XOR.DecryptXOR(row.Field<int>("DiemNhanDuoc"), keyXOR),
+                        row.Field<int>("TongTienTT"),
+                        row.Field<int>("DiemSuDung"),
+                        row.Field<int>("TongTien"),
+                        row.Field<int>("DiemNhanDuoc"),
                         AES.DecryptAES(row.Field<string>("MaKM"), newKeyAES),
                         AES.DecryptAES(row.Field<string>("MaNV"), newKeyAES),
                         AES.DecryptAES(row.Field<string>("MaKH"), newKeyAES),
@@ -68,17 +68,25 @@ namespace BLL
         }
         public bool insertHoaDon(HoaDonDTO hd)
         {
+            hd.MaHD = AES.EncryptAES(hd.MaHD, newKeyAES);
+            //hd.TongTienTT = XOR.EncryptXOR(hd.TongTienTT, keyXOR);
+            //hd.DiemSuDung = XOR.EncryptXOR(hd.DiemSuDung, keyXOR);
+            //hd.TongTien = XOR.EncryptXOR(Convert.ToInt32(hd.TongTien), keyXOR);
+            //hd.DiemNhanDuoc = XOR.EncryptXOR(hd.DiemNhanDuoc, keyXOR);
+            hd.MaKM = AES.EncryptAES(hd.MaKM, newKeyAES);
+            hd.MaNV = AES.EncryptAES(hd.MaNV, newKeyAES);
+            hd.MaKH = AES.EncryptAES(hd.MaKH, newKeyAES);
             return hdDAL.insertHoaDon(hd);
         }
         public bool updateHoaDon(HoaDonDTO hd)
         {
             hd.MaHD = AES.EncryptAES(hd.MaHD, newKeyAES);
-            hd.TongTienTT = XOR.EncryptXOR(hd.TongTienTT, keyXOR);
-            hd.DiemSuDung = XOR.EncryptXOR(hd.DiemSuDung, keyXOR);
-            hd.TongTien = XOR.EncryptXOR(Convert.ToInt32(hd.TongTien), keyXOR);
-            hd.DiemNhanDuoc = XOR.EncryptXOR(hd.DiemNhanDuoc, keyXOR);
+            //hd.TongTienTT = XOR.EncryptXOR(hd.TongTienTT, keyXOR);
+            //hd.DiemSuDung = XOR.EncryptXOR(hd.DiemSuDung, keyXOR);
+            //hd.TongTien = XOR.EncryptXOR(Convert.ToInt32(hd.TongTien), keyXOR);
+            //hd.DiemNhanDuoc = XOR.EncryptXOR(hd.DiemNhanDuoc, keyXOR);
             hd.MaKM = AES.EncryptAES(hd.MaKM, newKeyAES);
-            hd.MaHD = AES.EncryptAES(hd.MaHD, newKeyAES);
+            hd.MaNV = AES.EncryptAES(hd.MaNV, newKeyAES);
             hd.MaKH = AES.EncryptAES(hd.MaKH, newKeyAES);
             return hdDAL.updateHoaDon(hd);
         }
@@ -94,9 +102,9 @@ namespace BLL
                         AES.DecryptAES(row.Field<string>("MaHD"), newKeyAES),
                         row.Field<DateTime>("NgayLapHD"),                
                         AES.DecryptAES(row.Field<string>("Ten"), newKeyAES),
-                        XOR.DecryptXOR(row.Field<int>("DiemSuDung"), keyXOR),
-                        XOR.DecryptXOR(row.Field<int>("TongTien"), keyXOR),
-                        XOR.DecryptXOR(row.Field<int>("DiemNhanDuoc"), keyXOR),
+                        row.Field<int>("DiemSuDung"),
+                        row.Field<int>("TongTien"),
+                        row.Field<int>("DiemNhanDuoc"),
                         AES.DecryptAES(row.Field<string>("Ten1"), newKeyAES),
 
                         // Thêm các trường cần giải mã khác nếu có

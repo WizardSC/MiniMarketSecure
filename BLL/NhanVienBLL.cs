@@ -43,8 +43,7 @@ namespace BLL
                 decryptedNV.MaNV = AES.DecryptAES(encryptedNV.MaNV, newKeyAES);
                 decryptedNV.Ho = AES.DecryptAES(encryptedNV.Ho, newKeyAES);
                 decryptedNV.Ten = AES.DecryptAES(encryptedNV.Ten, newKeyAES);
-                //Console.WriteLine("Xin chao");
-                //Console.WriteLine(decryptedNV.MaNV + decryptedNV.Ho + decryptedNV.Ten);
+
                 decryptedList.Add(decryptedNV);
             }
 
@@ -133,7 +132,7 @@ namespace BLL
                     AES.DecryptAES(row.Field<string>("Ten"), newKeyAES),
                     AES.DecryptAES(row.Field<string>("MaTK"), newKeyAES),
                     AES.DecryptAES(row.Field<string>("MaCV"), newKeyAES),
-                        row.Field<DateTime>("NgaySinh"),
+                        row.Field<DateTime>("NgayLap"),
 
                         // Thêm các trường cần giải mã khác nếu có
                     }, false))
@@ -148,11 +147,37 @@ namespace BLL
             }
             //return nvDAL.getListNhanVienHasTK();
         }
-        
+
 
         public DataTable getCurrentNVHasTK(string maNV)
         {
-            return nvDAL.getCurrentNVHasTK(maNV);
+            maNV = AES.EncryptAES(maNV, newKeyAES);
+            DataTable tempNV = nvDAL.getCurrentNVHasTK(maNV);
+            if (tempNV != null && tempNV.Rows.Count > 0)
+            {
+                DataTable dtNV = tempNV.Clone();
+                dtNV = tempNV.AsEnumerable()
+                    .Select(row => dtNV.LoadDataRow(new object[]
+                    {
+                        AES.DecryptAES(row.Field<string>("MaNV"), newKeyAES),
+                        AES.DecryptAES(row.Field<string>("Ho"), newKeyAES),
+                        AES.DecryptAES(row.Field<string>("Ten"), newKeyAES),
+                        AES.DecryptAES(row.Field<string>("MaTK"), newKeyAES),
+                        AES.DecryptAES(row.Field<string>("MaCV"), newKeyAES),
+
+                        row.Field<DateTime>("NgayLap"),
+
+                    }, false))
+                    .CopyToDataTable();
+                dtNV.DefaultView.Sort = "MaNV ASC";
+
+                return dtNV;
+            }
+            else
+            {
+                return tempNV;
+            }
+            //return nvDAL.getCurrentNVHasTK(maNV);
         }
         public bool insertNhanVien(NhanVienDTO nv)
         {
@@ -192,7 +217,6 @@ namespace BLL
             }
             nv.MaCV = AES.EncryptAES(nv.MaCV, newKeyAES);
 
-            Console.WriteLine(nv.MaTK);
             //return true;
             return nvDAL.updateNhanVien(nv);
         }

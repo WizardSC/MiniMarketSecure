@@ -93,7 +93,7 @@ namespace DAL
                 Connect();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "UPDATE PhanQuyen SET BanHang = @BanHang, HoaDon = @HoaDon,NhapHang = @NhapHang,PhieuNhap = @PhieuNhap,\r\n    KhachHang = @KhachHang,\r\n    NhanVien = @NhanVien,\r\n    SanPham = @SanPham,\r\n    Loai = @Loai,\r\n    NhaSanXuat = @NhaSanXuat,\r\n    ChucVu = @ChucVu,\r\n    KhuyenMai = @KhuyenMai,\r\n    NhaCungCap = @NhaCungCap,\r\n    ThongKe = @ThongKe,\r\n    TaiKhoan = @TaiKhoan,\r\n    PhanQuyen = @PhanQuyen\r\nWHERE TenPQ = @TenPQ;";
+                cmd.CommandText = "UPDATE PhanQuyen SET BanHang = @BanHang, HoaDon = @HoaDon,NhapHang = @NhapHang,PhieuNhap = @PhieuNhap, KhachHang = @KhachHang,  NhanVien = @NhanVien, SanPham = @SanPham,\r\n    Loai = @Loai, NhaSanXuat = @NhaSanXuat, ChucVu = @ChucVu, KhuyenMai = @KhuyenMai, NhaCungCap = @NhaCungCap, ThongKe = @ThongKe, TaiKhoan = @TaiKhoan, PhanQuyen = @PhanQuyen WHERE TenPQ = @TenPQ;";
                 cmd.Parameters.Add("@BanHang", SqlDbType.TinyInt).Value = pq.IsBanHang;
                 cmd.Parameters.Add("@HoaDon", SqlDbType.TinyInt).Value = pq.IsHoaDon;
                 cmd.Parameters.Add("@NhapHang", SqlDbType.TinyInt).Value = pq.IsNhapHang;
@@ -109,7 +109,7 @@ namespace DAL
                 cmd.Parameters.Add("@ThongKe", SqlDbType.TinyInt).Value = pq.IsThongKe;
                 cmd.Parameters.Add("@TaiKhoan", SqlDbType.TinyInt).Value = pq.IsTaiKhoan;
                 cmd.Parameters.Add("@PhanQuyen", SqlDbType.TinyInt).Value = pq.IsPhanQuyen;
-                cmd.Parameters.Add("@TenPQ", SqlDbType.NVarChar, 30).Value = pq.TenPQ;
+                cmd.Parameters.Add("@TenPQ", SqlDbType.NVarChar, 100).Value = pq.TenPQ;
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
                 return true;

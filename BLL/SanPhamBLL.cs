@@ -50,9 +50,9 @@ namespace BLL
                         //row.Field<string>("MaSP"),
                         AES.DecryptAES(row.Field<string>("MaSP"),newKeyAES),
                         AES.DecryptAES(row.Field<string>("TenSP"),newKeyAES),
-                        XOR.DecryptXOR(row.Field<int>("SoLuong"),keyXOR),
-                        XOR.DecryptXOR(row.Field<int>("DonGiaNhap"),keyXOR),
-                        XOR.DecryptXOR(row.Field<int>("DonGiaBan"),keyXOR),
+                        row.Field<int>("SoLuong"),
+                        row.Field<int>("DonGiaNhap"),
+                        row.Field<int>("DonGiaBan"),
                         AES.DecryptAES(row.Field<string>("DonViTinh"),newKeyAES),
                         XOR.DecryptXOR(row.Field<int>("TrangThai"),keyXOR),
                         AES.DecryptAES(row.Field<string>("MaLoai"),newKeyAES),
@@ -85,9 +85,9 @@ namespace BLL
                 sp.MaLoai = AES.DecryptAES(encryptedSP.MaLoai, newKeyAES);
                 sp.MaNSX = AES.DecryptAES(encryptedSP.MaNSX, newKeyAES);
                 sp.MaNCC = AES.DecryptAES(encryptedSP.MaNCC, newKeyAES);
-                sp.SoLuong = XOR.DecryptXOR(encryptedSP.SoLuong, keyXOR);
-                sp.DonGiaBan = XOR.DecryptXOR(encryptedSP.DonGiaBan, keyXOR);
-                sp.DonGiaNhap = XOR.DecryptXOR(encryptedSP.DonGiaNhap, keyXOR);
+                sp.SoLuong = encryptedSP.SoLuong;
+                sp.DonGiaBan = encryptedSP.DonGiaBan;
+                sp.DonGiaNhap = encryptedSP.DonGiaNhap;
                 sp.TrangThaiSP = XOR.DecryptXOR(encryptedSP.TrangThaiSP, keyXOR);
                 sp.DonViTinh = AES.DecryptAES(encryptedSP.DonViTinh, newKeyAES);
 
@@ -105,9 +105,9 @@ namespace BLL
             sp.MaLoai = AES.EncryptAES(sp.MaLoai, newKeyAES);
             sp.MaNSX = AES.EncryptAES(sp.MaNSX, newKeyAES);
             sp.MaNCC = AES.EncryptAES(sp.MaNCC, newKeyAES);
-            sp.SoLuong = XOR.EncryptXOR(sp.SoLuong, keyXOR);
-            sp.DonGiaBan = XOR.EncryptXOR(sp.DonGiaBan, keyXOR);
-            sp.DonGiaNhap = XOR.EncryptXOR(sp.DonGiaNhap, keyXOR);
+            //sp.SoLuong = XOR.EncryptXOR(sp.SoLuong, keyXOR);
+            //sp.DonGiaBan = XOR.EncryptXOR(sp.DonGiaBan, keyXOR);
+            //sp.DonGiaNhap = XOR.EncryptXOR(sp.DonGiaNhap, keyXOR);
             sp.TrangThaiSP = XOR.EncryptXOR(sp.TrangThaiSP, keyXOR);
             sp.DonViTinh = AES.EncryptAES(sp.DonViTinh, newKeyAES);
             return spDAL.insertSanPham(sp);
@@ -119,9 +119,9 @@ namespace BLL
             sp.MaLoai = AES.EncryptAES(sp.MaLoai, newKeyAES);
             sp.MaNSX = AES.EncryptAES(sp.MaNSX, newKeyAES);
             sp.MaNCC = AES.EncryptAES(sp.MaNCC, newKeyAES);
-            sp.SoLuong = XOR.EncryptXOR(sp.SoLuong, keyXOR);
-            sp.DonGiaBan = XOR.EncryptXOR(sp.DonGiaBan, keyXOR);
-            sp.DonGiaNhap = XOR.EncryptXOR(sp.DonGiaNhap, keyXOR);
+            //sp.SoLuong = XOR.EncryptXOR(sp.SoLuong, keyXOR);
+            //sp.DonGiaBan = XOR.EncryptXOR(sp.DonGiaBan, keyXOR);
+            //sp.DonGiaNhap = XOR.EncryptXOR(sp.DonGiaNhap, keyXOR);
             sp.TrangThaiSP = XOR.EncryptXOR(sp.TrangThaiSP, keyXOR);
             sp.DonViTinh = AES.EncryptAES(sp.DonViTinh, newKeyAES);
             return spDAL.updateSanPham(sp);
@@ -144,7 +144,7 @@ namespace BLL
 
         public bool updateTonKho(string maSP, int soLuong)
         {
-            soLuong = XOR.EncryptXOR(soLuong, keyXOR);
+            //soLuong = XOR.EncryptXOR(soLuong, keyXOR);
             maSP = AES.EncryptAES(maSP, newKeyAES);
 
             return spDAL.updateTonKho(maSP, soLuong);

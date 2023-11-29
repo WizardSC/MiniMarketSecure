@@ -174,11 +174,12 @@ namespace GUI
         private void loadMaHD()
         {
 
-            var sortedHD = hdBLL.getListHoaDon().AsEnumerable()
-                                .OrderBy(row => row.Field<string>("MaHD"))
-                                .CopyToDataTable();
-            if (sortedHD.Rows.Count > 0)
+           
+            if (hdBLL.getListHoaDon().Rows.Count > 0)
             {
+                var sortedHD = hdBLL.getListHoaDon().AsEnumerable()
+                               .OrderBy(row => row.Field<string>("MaHD"))
+                               .CopyToDataTable();
                 var lastMaHD = sortedHD.AsEnumerable().Last()["MaHD"].ToString();
                 int lastNumber = int.Parse(lastMaHD.Substring(2));
                 int newNumber = lastNumber + 1;
@@ -790,7 +791,7 @@ namespace GUI
             hd.DiemSuDung = int.Parse(lblDiemTL.Text);
             hd.TongTien = ConvertVNDToFloat(lblTongTien.Text);
             hd.DiemNhanDuoc = (int)(ConvertVNDToFloat(lblTongTien.Text) / 10000.0f);
-            hd.MaKM = (lblKhuyenMai.Text == "Không KM") ? null : lblKhuyenMai.Text;
+            hd.MaKM = (lblKhuyenMai.Text == "Không KM") ? "" : lblKhuyenMai.Text;
             hd.MaNV = listNV
                 .Where(row => (row.Ho + " " + row.Ten).Equals(lblNhanVien.Text))
                 .Select(row => row.MaNV)
@@ -798,10 +799,11 @@ namespace GUI
 
             List<Tuple<string, string, string>> listKH = ConvertDataTableToList(dtThongTinKhachHang);
             //Dùng LINQ
-            hd.MaKH = listKH
+            string maKH = listKH
                 .Where(tuple => (tuple.Item2 + " " + tuple.Item3).Equals(lblKhachHang.Text))
                 .Select(tuple => tuple.Item1)
                 .FirstOrDefault();
+            hd.MaKH = maKH;
 
 
             int result = hdBLL.insertHoaDon(hd) ? 1 : 0;
@@ -830,8 +832,9 @@ namespace GUI
                 ProductInfo product = pair.Value;
 
                 CTHoaDonDTO cthd = new CTHoaDonDTO();
-                cthd.MaHD = hd.MaHD;
+                cthd.MaHD = lblMaHD.Text.Substring(1);
                 cthd.MaSP = product.MaSP;
+                Console.WriteLine(cthd.MaSP);
                 cthd.TenSP = product.TenSP;
                 cthd.SoLuong = product.SoLuong;
                 cthd.DonGiaBanDau = product.DonGiaBanDau;
@@ -859,14 +862,14 @@ namespace GUI
             {
                 MessageBox.Show("Có lỗi xảy ra khi thêm chi tiết hóa đơn");
             }
-            int resultDiemTL = khBLL.updateDiemTL(hd.MaKH, -hd.DiemSuDung) ? 1 : 0;
+            int resultDiemTL = khBLL.updateDiemTL(maKH, -hd.DiemSuDung) ? 1 : 0;
             if (resultDiemTL == 1)
             {
                 MessageBox.Show($"Khách hàng đã sử dụng {hd.DiemSuDung} điểm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
 
-            int resultDiemTL1 = khBLL.updateDiemTL(hd.MaKH, hd.DiemNhanDuoc) ? 1 : 0;
+            int resultDiemTL1 = khBLL.updateDiemTL(maKH, hd.DiemNhanDuoc) ? 1 : 0;
             if (resultDiemTL1 == 1)
             {
                 MessageBox.Show($"Khách hàng sẽ nhận được {hd.DiemNhanDuoc} điểm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

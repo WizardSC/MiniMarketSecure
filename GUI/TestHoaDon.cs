@@ -39,8 +39,8 @@ namespace GUI
             //    Console.WriteLine("MaKH: " + row["MaKH"]);
             //    Console.WriteLine("------------------------------");
             //}
-            //updateHoaDon();
-            updateCTHD();
+            updateHoaDon();
+            //updateCTHD();
         }
         public void updateCTHD()
         {

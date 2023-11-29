@@ -24,9 +24,7 @@ namespace BLL.Crypto
                 // Đảm bảo độ dài của binaryKey bằng độ dài của binaryPlaintext
                 binaryKey = binaryKey.PadLeft(binaryPlaintext.Length, '0');
             }
-            Console.WriteLine(binaryPlaintext);
-            Console.WriteLine(binaryKey);
-
+            
             // Thực hiện phép toán XOR
             int ciphertext = Convert.ToInt32(binaryPlaintext, 2) ^ Convert.ToInt32(binaryKey, 2);
 
@@ -49,8 +47,7 @@ namespace BLL.Crypto
                 // Đảm bảo độ dài của binaryCiphertext bằng độ dài của binaryKey
                 binaryCiphertext = binaryCiphertext.PadLeft(binaryKey.Length, '0');
             }
-            Console.WriteLine(binaryCiphertext);
-            Console.WriteLine(binaryKey);
+           
             // Thực hiện phép toán XOR để giải mã
             int decryptedValue = Convert.ToInt32(binaryCiphertext, 2) ^ Convert.ToInt32(binaryKey, 2);
 

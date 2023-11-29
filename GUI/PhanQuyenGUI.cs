@@ -31,7 +31,7 @@ namespace GUI
             dtChucVu = cvBLL.getListChucVu();
             this.quyenPhanQuyen = isPhanQuyen;
             InitializePermissionControls();
-            loadToCBXChonPQ();
+            //loadToCBXChonPQ();
             loadToCBX();
             checkQuyen(quyenPhanQuyen);
             //cbxDanhSach.SelectedIndex = 0;
@@ -100,14 +100,7 @@ namespace GUI
         (cbxPhanQuyen, chkPhanQuyen)
     };
         }
-        private void loadToCBXChonPQ()
-        {
-            cbxDanhSach.Items.Add("Nhân viên bán hàng");
-            cbxDanhSach.Items.Add("Nhân viên kho");
-            cbxDanhSach.Items.Add("Nhân viên quản lý");
-            cbxDanhSach.Items.Add("Quản trị viên");
-
-        }
+        
         private void UpdatePermissionControls(RJComboBox cbx, BiggerCheckBox chk, int value)
         {
             cbx.SelectedIndex = value;
